@@ -1,35 +1,58 @@
 package FlightSystem;
 
-import EngineStuff.Service;
+import Interface.InterfaceService;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
-public class Flight extends Service {
-    private String destination;
+import EngineStuff.Location;
 
-    private String location;
+public class Flight extends InterfaceService {
+    private UUID id;
+    private String name;
+    private String description;
+    private Float price;
+    private Location location;
+    private Language[] languages;
+    private boolean childSafe;
+    private boolean available;
+
+    private Location destination;
     private Date departureDate;
-
     private Date arrivalDate;
-    private String id;
     private ArrayList<Seat> seats;
     private String status;
-
     private int flightDuration;
-
     static final int KR_PER_MIN = 300;
 
+    enum Language {
+        ICELANDIC,
+        ENGLISH,
+        FRENCH,
+        GERMAN,
+        POLISH
+    }
+
     // Constructor
-    public Flight(String location, String destination, Date departureDate, Date arrivalDate, String id, ArrayList<Seat> seats, String status) {
-        this.destination = destination;
-        this.location = location;
+    public Flight(String location, String destination, Date departureDate, Date arrivalDate, String name, ArrayList<Seat> seats, String status) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.description = "Flight from " + location + " to " + destination + " on " + departureDate.toString();
+        this.location = new Location(0f, 0f, location); // TODO: Add real coordinates
+        this.destination = new Location(0f, 0f, destination); // TODO: Add real coordinates
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
-        this.id = id;
+
+        this.description = "Flight from " + location + " to " + destination + " on " + departureDate.toString();
         this.seats = seats;
         this.status = status;
-        this.flightDuration = calculateDuration();
+        this.flightDuration = this.calculateDuration();
+        this.price = (float) this.getStartingPrice();
+
+        this.languages = Language.values();
+        this.childSafe = true;
+        this.available = this.getAvailableSeats().size() > 0;
     }
 
     @Override
@@ -38,35 +61,35 @@ public class Flight extends Service {
         return getId() + " at " + getDepartureDate().toString();
     }
 
+    @Override
+    public boolean getAvailable() {
+        return this.getAvailableSeats().size() > 0;
+    }
+
     public int calculateDuration(){
-        long timeDifference = getArrivalDate().getTime() - getDepartureDate().getTime();
+        long timeDifference = this.getArrivalDate().getTime() - this.getDepartureDate().getTime();
         long minutes = timeDifference/(1000*60);
         return (int) minutes;
     }
 
-    // Getters and Setters
-    public String getDestination() {
+    public Location getDestination() {
         return this.destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Location destination) {
         this.destination = destination;
-    }
-
-    public String getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Date getDepartureDate() {
-        return this.departureDate;
     }
 
     public int getDuration() {
         return this.flightDuration;
+    }
+
+    public Date getArrivalDate() {
+        return this.arrivalDate;
+    }
+
+    public Date getDepartureDate() {
+        return this.departureDate;
     }
 
     public void setDepartureDate(Date date) {
@@ -74,19 +97,9 @@ public class Flight extends Service {
         this.flightDuration = this.calculateDuration();
     }
 
-    public Date getArrivalDate(){ return this.arrivalDate;}
-
     public void setArrivalDate(Date date){
         this.arrivalDate = date;
         this.flightDuration = this.calculateDuration();
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public ArrayList<Seat> getSeats() {
@@ -105,7 +118,6 @@ public class Flight extends Service {
         this.status = status;
     }
 
-    // Other methods
     public ArrayList<Seat> getAvailableSeats() {
         ArrayList<Seat> availableSeats = new ArrayList<Seat>();
         for (Seat s : this.seats) {
@@ -128,6 +140,4 @@ public class Flight extends Service {
     public int getStartingPrice() {
         return this.getDuration() * KR_PER_MIN;
     }
-
-    // TODO: implement updateFlightStatus method
 }

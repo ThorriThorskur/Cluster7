@@ -1,11 +1,10 @@
-package EngineStuff;
+package Interface;
 
 import java.util.Collection;
 
-public interface ServiceController {
+public interface InterfaceServiceController {
     public Collection search(String query);
-    public Service[] recommend(Service[] trip);
-    public void addService(Service service);
-    public void removeService(Service service);
+    public void addService(InterfaceService service);
+    public void removeService(InterfaceService service);
     // public Booking book(specialNeeds sn, Service service, User user);
 }

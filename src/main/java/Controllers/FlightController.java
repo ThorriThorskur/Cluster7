@@ -2,6 +2,7 @@ package Controllers;
 
 import Interface.InterfaceService;
 import Interface.InterfaceServiceController;
+import FlightSystem.BookingFlightDB;
 import FlightSystem.Flight;
 import FlightSystem.FlightDB;
 import FlightSystem.Seat;
@@ -12,13 +13,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import FlightSystem.FlightDB;
 
 public class FlightController implements InterfaceServiceController {
     private FlightDB db;
+    private BookingFlightDB bookingDb;
 
-    public FlightController(FlightDB flightDB){
-        db = flightDB;
+    public FlightController(FlightDB flightDB, BookingFlightDB bookingDb){
+        this.db = flightDB;
+        this.bookingDb = bookingDb;
     }
 
     @Override

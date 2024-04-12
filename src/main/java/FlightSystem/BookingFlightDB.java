@@ -57,7 +57,7 @@ public class BookingFlightDB {
             String insert = "INSERT INTO Booking VALUES ((?), (?),(?),(?),(?),(?),(?))";
             PreparedStatement prep = c.prepareStatement(insert);
             prep.setString(1, String.valueOf(b.getPassenger().getPassportNumber()));
-            prep.setString(2, b.getBookedFlight().getId());
+            prep.setString(2, b.getBookedFlight().getName());
             prep.setString(3, b.getSeat().getSeatName());
             prep.setString(4, depDate);
             prep.setString(5, depDate);

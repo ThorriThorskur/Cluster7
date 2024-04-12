@@ -1,8 +1,9 @@
-package EngineStuff;
+package Interface;
 
 import java.util.UUID;
+import EngineStuff.Location;
 
-public abstract class Service {
+public abstract class InterfaceService {
     private UUID id;
     private String name;
     private String description;

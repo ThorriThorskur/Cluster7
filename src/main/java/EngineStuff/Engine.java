@@ -35,7 +35,7 @@ public class Engine {
 
         switch (sortingParam) {
             case ID:
-                comp = Comparator.comparingLong(Service::getId);
+                comp = Comparator.comparing(Service::getId);
                 break;
             case PRICE:
                 comp = Comparator.comparingDouble(Service::getPrice);

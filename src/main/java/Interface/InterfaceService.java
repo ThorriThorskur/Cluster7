@@ -1,7 +1,9 @@
 package EngineStuff;
 
+import java.util.UUID;
+
 public abstract class Service {
-    private long id;
+    private UUID id;
     private String name;
     private String description;
     private Float price;
@@ -18,7 +20,7 @@ public abstract class Service {
         POLISH
     }
 
-  public long getId(){return this.id;}
+  public UUID getId(){return this.id;}
   public String getName(){return this.name;}
   public String getDescription(){return this.description;}
   public Float getPrice(){return this.price;}
@@ -27,7 +29,7 @@ public abstract class Service {
   public Language[] getLanguages(){return this.languages;}
   public boolean getAvailable(){return this.available;}
 
-  public void setId(long id){this.id = id;}
+  public void setId(UUID id){this.id = id;}
   public void setName(String name){this.name = name;}
   public void setDescription(String description){this.description = description;}
   public void setPrice(Float price){this.price = price;}

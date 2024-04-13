@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class FlightDB {
     final String [] seats = {"1A","1B","1C","1D",
@@ -35,6 +36,8 @@ public class FlightDB {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
+    public static Map<String, float[]> coordinates;
+
     public FlightDB() throws ClassNotFoundException {
         initialize();
         seatDB = new SeatDB();
@@ -51,7 +54,6 @@ public class FlightDB {
         } catch (Exception e){
             System.out.println("no connection was possible");
         }
-
     }
 
     /*
@@ -233,6 +235,8 @@ public class FlightDB {
         }
         return null;
     }
+
+
 
     public void updateSeatToTaken(Flight flight, Seat seat){
         try {

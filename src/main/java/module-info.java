@@ -4,6 +4,7 @@ module team.t.hugb {
 
     requires org.controlsfx.controls;
     requires java.sql;
+    requires java.desktop;
 
     opens Controllers to javafx.fxml;
     exports Controllers;

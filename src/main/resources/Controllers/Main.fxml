@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="590.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomePageController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomePageController">
    <top>
       <Label fx:id="myLabel" contentDisplay="CENTER" prefHeight="42.0" prefWidth="818.0" text="Home" BorderPane.alignment="CENTER_LEFT">
          <font>
@@ -16,7 +16,7 @@
       </Label>
    </top>
    <left>
-      <ListView fx:id="menuListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT" />
+      <ListView fx:id="menuListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT" />
    </left>
    <center>
       <StackPane fx:id="contentPane" prefHeight="548.0" prefWidth="474.0" BorderPane.alignment="CENTER" />

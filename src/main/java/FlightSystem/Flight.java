@@ -2,6 +2,8 @@ package FlightSystem;
 
 import Interface.InterfaceService;
 
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.*;
 
 import EngineStuff.Location;
@@ -68,9 +70,9 @@ public class Flight extends InterfaceService {
         this.destination = new Location(getCoordinates(destination)[0], getCoordinates(destination)[1], destination); // TODO: Add real coordinates
         this.destinationProperty = new SimpleStringProperty(destination);
         this.departureDate = departureDate;
-        this.depTimeProperty = new SimpleStringProperty(String.valueOf(departureDate.getTime()));
+        this.depTimeProperty = new SimpleStringProperty(getTime(departureDate));
         this.arrivalDate = arrivalDate;
-        this.arrTimeProperty = new SimpleStringProperty(String.valueOf(arrivalDate.getTime()));
+        this.arrTimeProperty = new SimpleStringProperty(getTime(arrivalDate));
 
         this.description = "Flight from " + location + " to " + destination + " on " + departureDate.toString();
         this.seats = seats;
@@ -83,6 +85,11 @@ public class Flight extends InterfaceService {
         this.languages = Language.values();
         this.childSafe = true;
         this.available = this.getAvailableSeats().size() > 0;
+    }
+
+    public String getTime(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        return formatter.format(date);
     }
 
     public String getName(){

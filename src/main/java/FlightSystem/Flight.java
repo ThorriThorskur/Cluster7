@@ -5,10 +5,17 @@ import Interface.InterfaceService;
 import java.util.*;
 
 import EngineStuff.Location;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Flight extends InterfaceService {
     private UUID id;
-    private String name;
+    private StringProperty name;
+    private StringProperty locationProperty;
+    private StringProperty destinationProperty;
+    private StringProperty depTimeProperty;
+    private StringProperty arrTimeProperty;
+    private StringProperty priceProperty;
     private String description;
     private Float price;
     private Location location;
@@ -54,12 +61,16 @@ public class Flight extends InterfaceService {
     // Constructor
     public Flight(String location, String destination, Date departureDate, Date arrivalDate, String name, ArrayList<Seat> seats, String status) {
         this.id = UUID.randomUUID();
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
         this.description = "Flight from " + location + " to " + destination + " on " + departureDate.toString();
-        this.location = new Location(getCoordinates(location)[0], getCoordinates(location)[1], location); // TODO: Add real coordinates
+        this.location = new Location(getCoordinates(location)[0], getCoordinates(location)[1], location);
+        this.locationProperty = new SimpleStringProperty(location);
         this.destination = new Location(getCoordinates(destination)[0], getCoordinates(destination)[1], destination); // TODO: Add real coordinates
+        this.destinationProperty = new SimpleStringProperty(destination);
         this.departureDate = departureDate;
+        this.depTimeProperty = new SimpleStringProperty(String.valueOf(departureDate.getTime()));
         this.arrivalDate = arrivalDate;
+        this.arrTimeProperty = new SimpleStringProperty(String.valueOf(arrivalDate.getTime()));
 
         this.description = "Flight from " + location + " to " + destination + " on " + departureDate.toString();
         this.seats = seats;
@@ -67,9 +78,59 @@ public class Flight extends InterfaceService {
         this.flightDuration = this.calculateDuration();
         this.price = (float) this.getStartingPrice();
 
+        this.priceProperty = new SimpleStringProperty(String.valueOf(price));
+
         this.languages = Language.values();
         this.childSafe = true;
         this.available = this.getAvailableSeats().size() > 0;
+    }
+
+    public String getName(){
+        return name.get();
+    }
+
+    public StringProperty nameProperty(){
+        return name;
+    }
+
+    public String getLocationProperty(){
+        return locationProperty.get();
+    }
+
+    public StringProperty locationProperty(){
+        return locationProperty;
+    }
+
+    public String getDestinationProperty(){
+        return destinationProperty.get();
+    }
+
+    public StringProperty destinationProperty(){
+        return destinationProperty;
+    }
+
+    public String getDepTimeProperty(){
+        return depTimeProperty.get();
+    }
+
+    public StringProperty depTimeProperty(){
+        return depTimeProperty;
+    }
+
+    public String getArrTimeProperty(){
+        return arrTimeProperty.get();
+    }
+
+    public StringProperty arrTimeProperty(){
+        return arrTimeProperty;
+    }
+
+    public String getPriceProperty(){
+        return priceProperty.get();
+    }
+
+    public StringProperty priceProperty(){
+        return priceProperty;
     }
 
 

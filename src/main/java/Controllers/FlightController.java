@@ -8,11 +8,9 @@ import FlightSystem.FlightDB;
 import FlightSystem.Seat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -27,16 +25,37 @@ public class FlightController implements InterfaceServiceController {
     private BookingFlightDB bookingDb;
 
     @FXML
-    private ChoiceBox<String> fxDepDate;
+    private ChoiceBox<String> fxDeparture;
 
     @FXML
-    private ChoiceBox<String> fxArrDate;
+    private ChoiceBox<String> fxDestination;
 
     @FXML
     private DatePicker dpDate;
 
     @FXML
     private TextField txtMaxPrice;
+
+    @FXML
+    private TableView<Flight> tableFlights;
+
+    @FXML
+    private TableColumn<Flight, String> columnFlightName;
+
+    @FXML
+    private TableColumn<Flight, String> columnDeparture;
+
+    @FXML
+    private TableColumn<Flight, String> columnArrival;
+
+    @FXML
+    private TableColumn<Flight, String> columnDepartureTime;
+
+    @FXML
+    private TableColumn<Flight, String> columnArrivalTime;
+
+    @FXML
+    private TableColumn<Flight, String> columnPrice;
 
 
 
@@ -45,13 +64,24 @@ public class FlightController implements InterfaceServiceController {
         this.bookingDb = new BookingFlightDB();
         dpDate.setValue(LocalDate.now());
         populateDropDown();
+        createTableViewBindings();
+    }
+
+    public void createTableViewBindings() {
+        columnFlightName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        columnDeparture.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
+        columnArrival.setCellValueFactory(cellData -> cellData.getValue().destinationProperty());
+        columnDepartureTime.setCellValueFactory(cellData -> cellData.getValue().depTimeProperty());
+        columnArrivalTime.setCellValueFactory(cellData -> cellData.getValue().arrTimeProperty());
+        columnPrice.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
+
     }
 
     public void populateDropDown() throws ClassNotFoundException {
         ArrayList<String> airportNames = getAirportNames();
         ObservableList<String> airportObs = FXCollections.observableArrayList(airportNames);
-        fxDepDate.setItems(airportObs);
-        fxArrDate.setItems(airportObs);
+        fxDeparture.setItems(airportObs);
+        fxDestination.setItems(airportObs);
     }
 
 
@@ -125,5 +155,21 @@ public class FlightController implements InterfaceServiceController {
         }
 
         return seats;
+    }
+
+    public void onSearchClick(ActionEvent actionEvent) throws SQLException, ParseException {
+        ArrayList<Flight> flightArrayList = new ArrayList<>();
+        String location = fxDeparture.getValue();
+        String destination = fxDestination.getValue();
+        String date = String.valueOf(dpDate.getValue());
+
+        if (location != null && txtMaxPrice.getText().isEmpty()){
+            flightArrayList = searchFlights(location, destination, date);
+        } else {
+            flightArrayList = searchFlightsWithPrice(location, destination, date, Integer.parseInt(txtMaxPrice.getText()));
+        }
+        ObservableList<Flight> flightObs = FXCollections.observableArrayList(flightArrayList);
+        tableFlights.setItems(flightObs);
+
     }
 }

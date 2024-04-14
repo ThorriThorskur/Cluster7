@@ -17,9 +17,9 @@
          <Label text="Max Price:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          <TextField fx:id="txtMaxPrice" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-         <Button text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-         <ChoiceBox fx:id="fxDepDate" prefWidth="150.0" GridPane.columnIndex="1" />
-         <ChoiceBox fx:id="fxArrDate" prefWidth="150.0" GridPane.columnIndex="3" />
+         <Button onAction="#onSearchClick" text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         <ChoiceBox fx:id="fxDeparture" prefWidth="150.0" GridPane.columnIndex="1" />
+         <ChoiceBox fx:id="fxDestination" prefWidth="150.0" GridPane.columnIndex="3" />
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />

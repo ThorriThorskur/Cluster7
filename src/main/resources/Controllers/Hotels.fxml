@@ -1,11 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HotelController">
+<VBox prefHeight="485.0" prefWidth="800.0" spacing="2.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HotelController">
    <children>
-      <Label layoutX="272.0" layoutY="184.0" prefHeight="33.0" prefWidth="56.0" text="Hotels" />
+      <!-- Search Panel -->
+      <GridPane hgap="10" vgap="10">
+         <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+         <ComboBox fx:id="cmbLocation" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Reykjavik" />
+                  <String fx:value="Akureyri" />
+                  <String fx:value="Egilsstaðir" />
+                  <String fx:value="Bíldudalur" />
+                  <String fx:value="Hornafjorður" />
+                  <String fx:value="Húsavík" />
+                  <String fx:value="Isafjorður" />
+                  <String fx:value="Sauðárkrókur" />
+                  <String fx:value="Thorshofn" />
+                  <String fx:value="Vestmannaeyjar" />
+                  <String fx:value="Grimsey" />
+                  <String fx:value="Vopnafjorður" />
+                  <String fx:value="Gjogur" />
+               </FXCollections>
+            </items>
+         </ComboBox>
+
+         <Label text="Check-in Date:" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckIn" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+         <Label text="Check-out Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckOut" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+         <Label text="Max Price per Night:" GridPane.columnIndex="5" />
+         <TextField fx:id="txtMaxPrice" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+         <Button prefHeight="25.0" prefWidth="60.0" text="Search" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+         <Label GridPane.columnIndex="2" />
+         <Label text="Hotel:" GridPane.columnIndex="2" />
+         <ComboBox fx:id="cmbLocation1" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Pull from DB?" />
+               </FXCollections>
+            </items>
+         </ComboBox>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <!-- Hotel Table -->
+      <TableView fx:id="tableHotels">
+         <columns>
+            <TableColumn fx:id="columnHotelName" minWidth="100.0" prefWidth="200.0" text="Rooms" />
+            <TableColumn fx:id="columnLocation" minWidth="100.0" prefWidth="150.0" text="Location" />
+            <TableColumn fx:id="columnCheckInDate" minWidth="90.0" prefWidth="100.0" text="Check-In" />
+            <TableColumn fx:id="columnCheckOutDate" minWidth="90.0" prefWidth="100.0" text="Check-Out" />
+            <TableColumn fx:id="columnPricePerNight" minWidth="85.0" prefWidth="105.0" text="Price/Night" />
+         </columns>
+      </TableView>
+
+      <!-- Action Panel -->
+      <HBox alignment="CENTER_RIGHT" spacing="10">
+         <Button fx:id="bookHotelButton" text="Book Hotel" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets top="2.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
    </children>
-</AnchorPane>
+   <padding>
+      <Insets top="2.0" />
+   </padding>
+</VBox>

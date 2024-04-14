@@ -20,7 +20,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView editable="false" layoutX="102.0" layoutY="53.0" prefHeight="327.0" prefWidth="608.0">
+      <TableView editable="false" layoutX="102.0" layoutY="53.0" prefHeight="327.0" prefWidth="809.0">
          <columns>
             <TableColumn prefWidth="90.0" text="Type" />
             <TableColumn minWidth="0.0" prefWidth="395.0" text="Details" />
@@ -31,7 +31,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="purchaseButton" layoutX="511.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Purchase" />
+      <Button fx:id="purchaseButton" layoutX="507.0" layoutY="507.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Purchase" />
       <TextField fx:id="cardNumber" layoutX="102.0" layoutY="404.0" prefHeight="25.0" prefWidth="224.0" />
       <TextField fx:id="firstName" layoutX="102.0" layoutY="455.0" prefHeight="25.0" prefWidth="127.0" />
       <TextField fx:id="lastName" layoutX="231.0" layoutY="455.0" prefHeight="25.0" prefWidth="95.0" />
@@ -51,12 +51,12 @@
       <Label layoutX="251.0" layoutY="487.0" prefHeight="17.0" prefWidth="75.0" text="Postal code" />
       <Label layoutX="339.0" layoutY="487.0" prefHeight="17.0" prefWidth="110.0" text="Phone number" />
       <TextField fx:id="phoneNumber" layoutX="339.0" layoutY="504.0" />
-      <Label layoutX="511.0" layoutY="474.0" prefHeight="27.0" prefWidth="50.0" text="Total:">
+      <Label layoutX="507.0" layoutY="477.0" prefHeight="27.0" prefWidth="50.0" text="Total:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="totalAmount" alignment="CENTER_RIGHT" layoutX="561.0" layoutY="474.0" prefHeight="27.0" prefWidth="149.0" text="0 Kr">
+      <Label fx:id="totalAmount" alignment="CENTER_RIGHT" layoutX="557.0" layoutY="477.0" prefHeight="27.0" prefWidth="149.0" text="0 Kr">
          <font>
             <Font size="18.0" />
          </font>

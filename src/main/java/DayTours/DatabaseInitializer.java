@@ -1,6 +1,7 @@
 package DayTours;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
@@ -12,21 +13,30 @@ import java.util.UUID;
 
 public class DatabaseInitializer {
 
-    //private static final String DB_URL = "jdbc:sqlite:DB/tours.db";
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/Databases/tours.db";
+    private static final String DB_PATH = "src/main/resources/Databases/tours.db";
     private static final String SCHEMA_FILE_PATH = "src/main/java/DayTours/SCHEMA.sql";
     private Connection conn;
 
 
 
     public static void createNewDatabase() {
+        File dbFile = new File(DB_PATH);
+        if (dbFile.exists()) {
+            if (dbFile.delete()) {
+                System.out.println("Existing database deleted.");
+            } else {
+                System.out.println("Failed to delete the existing database.");
+                return;
+            }
+        }
+
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
                 System.out.println("A new database has been created.");
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

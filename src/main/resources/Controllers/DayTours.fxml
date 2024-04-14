@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,46 +21,20 @@
          <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="66.0" text="Tour Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
          <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="30.0" text="Date:" GridPane.columnIndex="2" />
-         <DatePicker fx:id="dpCheckOut" prefHeight="25.0" prefWidth="149.0" GridPane.columnIndex="3" />
-         <Label GridPane.columnIndex="10" />
-         <TextField fx:id="tourName" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" />
-         <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="35.0" text="Time:" GridPane.columnIndex="4" />
-         <ComboBox prefWidth="150.0" GridPane.columnIndex="5">
-            <items>
-               <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="06:00" />
-                  <String fx:value="07:00" />
-                  <String fx:value="08:00" />
-                  <String fx:value="09:00" />
-                  <String fx:value="10:00" />
-                  <String fx:value="11:00" />
-                  <String fx:value="12:00" />
-                  <String fx:value="13:00" />
-                  <String fx:value="14:00" />
-                  <String fx:value="15:00" />
-                  <String fx:value="16:00" />
-                  <String fx:value="17:00" />
-                  <String fx:value="18:00" />
-                  <String fx:value="19:00" />
-                  <String fx:value="20:00" />
-                  <String fx:value="21:00" />
-                  <String fx:value="22:00" />
-                  <String fx:value="23:00" />
-                  <String fx:value="24:00" />
-                  <String fx:value="01:00" />
-                  <String fx:value="02:00" />
-                  <String fx:value="03:00" />
-                  <String fx:value="04:00" />
-                  <String fx:value="05:00" />
-               </FXCollections>
-            </items>
-         </ComboBox>
+         <DatePicker fx:id="fxDate" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="3" />
+         <Label GridPane.columnIndex="12" />
+         <TextField fx:id="fxTourName" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" />
+         <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="60.0" text="Category:" GridPane.columnIndex="4" />
+         <ChoiceBox fx:id="fxCategory" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" />
+         <Button fx:id="fxSearchButton" minWidth="60.0" mnemonicParsing="false" prefWidth="60.0" text="Search" GridPane.columnIndex="6" />
          <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
+            <ColumnConstraints minWidth="65.0" />
+            <ColumnConstraints minWidth="100.0" />
+            <ColumnConstraints minWidth="30.0" prefWidth="30.0" />
+            <ColumnConstraints minWidth="100.0" />
+            <ColumnConstraints maxWidth="76.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints maxWidth="209.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints maxWidth="209.0" minWidth="60.0" prefWidth="60.0" />
             <ColumnConstraints />
             <ColumnConstraints />
             <ColumnConstraints />
@@ -84,16 +56,18 @@
       <!-- Tour Table -->
       <TableView fx:id="tableTours">
          <columns>
-            <TableColumn fx:id="columnTourName" minWidth="100.0" prefWidth="200.0" text="Tour name" />
-            <TableColumn fx:id="columnAddress" minWidth="150.0" prefWidth="150.0" text="Pick up location" />
-            <TableColumn fx:id="columnDate" minWidth="90.0" prefWidth="100.0" text="date" />
-            <TableColumn fx:id="columnTime" minWidth="90.0" prefWidth="100.0" text="Time" />
+            <TableColumn fx:id="fxcolumnTourName" minWidth="100.0" prefWidth="172.0" text="Tour name" />
+            <TableColumn fx:id="fxcolumnAddress" minWidth="150.0" prefWidth="233.0" text="Description" />
+            <TableColumn fx:id="fxcolumnDate" minWidth="0.0" prefWidth="82.0" text="Date" />
+            <TableColumn fx:id="fxcolumnTime" minWidth="12.0" prefWidth="108.0" text="Category" />
+            <TableColumn prefWidth="46.0" text="Rating" />
+            <TableColumn prefWidth="81.0" text="Price" />
          </columns>
       </TableView>
 
       <!-- Action Panel -->
       <HBox alignment="CENTER_RIGHT" spacing="10">
-         <Button fx:id="bookTourButton" text="Book Tour" HBox.hgrow="ALWAYS">
+         <Button fx:id="fxBookTourButton" text="Book Tour" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets top="2.0" />
             </HBox.margin>

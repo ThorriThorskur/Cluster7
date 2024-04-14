@@ -1,65 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox prefHeight="485.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FlightController">
+<VBox prefHeight="485.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FlightController">
    <children>
       <!-- Search Panel -->
       <GridPane hgap="10" vgap="10">
          <Label text="Departure:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-         <ComboBox fx:id="cmbDeparture" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <items>
-               <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Reykjavik" />
-                  <String fx:value="Akureyri" />
-                  <String fx:value="Egilsstaðir" />
-                  <String fx:value="Bíldudalur" />
-                  <String fx:value="Hornafjorður" />
-                  <String fx:value="Húsavík" />
-                  <String fx:value="Isafjorður" />
-                  <String fx:value="Sauðárkrókur" />
-                  <String fx:value="Thorshofn" />
-                  <String fx:value="Vestmannaeyjar" />
-                  <String fx:value="Grimsey" />
-                  <String fx:value="Vopnafjorður" />
-                  <String fx:value="Gjogur" />
-               </FXCollections>
-            </items>
-         </ComboBox>
          <Label text="Destination:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-         <ComboBox fx:id="cmbArrival" GridPane.columnIndex="3" GridPane.rowIndex="0">
-            <items>
-               <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Reykjavik" />
-                  <String fx:value="Akureyri" />
-                  <String fx:value="Egilsstaðir" />
-                  <String fx:value="Bíldudalur" />
-                  <String fx:value="Hornafjorður" />
-                  <String fx:value="Húsavík" />
-                  <String fx:value="Isafjorður" />
-                  <String fx:value="Sauðárkrókur" />
-                  <String fx:value="Thorshofn" />
-                  <String fx:value="Vestmannaeyjar" />
-                  <String fx:value="Grimsey" />
-                  <String fx:value="Vopnafjorður" />
-                  <String fx:value="Gjogur" />
-               </FXCollections>
-            </items>
-         </ComboBox>
 
          <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
          <DatePicker fx:id="dpDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -68,6 +18,8 @@
          <TextField fx:id="txtMaxPrice" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
          <Button text="Search" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         <ChoiceBox fx:id="fxDepDate" prefWidth="150.0" GridPane.columnIndex="1" />
+         <ChoiceBox fx:id="fxArrDate" prefWidth="150.0" GridPane.columnIndex="3" />
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />

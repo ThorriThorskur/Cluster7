@@ -6,10 +6,18 @@ import FlightSystem.BookingFlightDB;
 import FlightSystem.Flight;
 import FlightSystem.FlightDB;
 import FlightSystem.Seat;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,10 +26,42 @@ public class FlightController implements InterfaceServiceController {
     private FlightDB db;
     private BookingFlightDB bookingDb;
 
+    @FXML
+    private ChoiceBox<String> fxDepDate;
+
+    @FXML
+    private ChoiceBox<String> fxArrDate;
+
+    @FXML
+    private DatePicker dpDate;
+
+    @FXML
+    private TextField txtMaxPrice;
+
+
+
+    public void initialize() throws ClassNotFoundException {
+        this.db = new FlightDB();
+        this.bookingDb = new BookingFlightDB();
+        dpDate.setValue(LocalDate.now());
+        populateDropDown();
+    }
+
+    public void populateDropDown() throws ClassNotFoundException {
+        ArrayList<String> airportNames = getAirportNames();
+        ObservableList<String> airportObs = FXCollections.observableArrayList(airportNames);
+        fxDepDate.setItems(airportObs);
+        fxArrDate.setItems(airportObs);
+    }
+
+
+    /*
     public FlightController(FlightDB flightDB, BookingFlightDB bookingDb){
         this.db = flightDB;
         this.bookingDb = bookingDb;
     }
+
+     */
 
     @Override
     public Collection search(String query) {
@@ -61,7 +101,6 @@ public class FlightController implements InterfaceServiceController {
                 filteredFlights.add(flight);
             }
         }
-        
         return filteredFlights;
     }
 

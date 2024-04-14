@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomePageController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomePageController">
    <top>
       <Label fx:id="myLabel" contentDisplay="CENTER" prefHeight="42.0" prefWidth="818.0" text="Home" BorderPane.alignment="CENTER_LEFT">
          <font>

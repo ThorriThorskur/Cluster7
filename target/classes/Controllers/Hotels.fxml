@@ -1,11 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HotelController">
+<VBox prefHeight="485.0" prefWidth="800.0" spacing="2.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HotelController">
    <children>
-      <Label layoutX="272.0" layoutY="184.0" prefHeight="33.0" prefWidth="56.0" text="Hotels" />
+      <!-- Search Panel -->
+      <GridPane hgap="10" vgap="10">
+         <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+         <ChoiceBox fx:id="cmbLocation" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+         </ChoiceBox>
+
+         <Label text="Check-in Date:" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckIn" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+         <Label text="Check-out Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckOut" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+         <Label text="Max Price per Night:" GridPane.columnIndex="5" />
+         <TextField fx:id="txtMaxPrice" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+         <Button fx:id="hotelSearchButton" onAction="#onHotelSearchButtonClicked" prefHeight="25.0" prefWidth="60.0" text="Search" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+         <Label GridPane.columnIndex="2" />
+         <Label text="Hotel:" GridPane.columnIndex="2" />
+         <ChoiceBox fx:id="cmbHotels" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Pull from DB?" />
+               </FXCollections>
+            </items>
+         </ChoiceBox>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <!-- Hotel Table -->
+      <TableView fx:id="tableRooms">
+         <columns>
+            <TableColumn fx:id="columnRoomNumber" minWidth="88.99996644258499" prefWidth="158.60000306367874" text="Room number" />
+            <TableColumn fx:id="columnRoomType" minWidth="100.0" prefWidth="193.3999786376953" text="Room type" />
+            <TableColumn fx:id="columnAvailability" minWidth="90.0" prefWidth="214.5999755859375" text="Availability" />
+            <TableColumn fx:id="columnPricePerNight" minWidth="85.0" prefWidth="231.800048828125" text="Price" />
+         </columns>
+      </TableView>
+
+      <!-- Action Panel -->
+      <HBox alignment="CENTER_RIGHT" spacing="10">
+         <Button fx:id="bookHotelButton" text="Book Hotel" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets top="2.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
    </children>
-</AnchorPane>
+   <padding>
+      <Insets top="2.0" />
+   </padding>
+</VBox>

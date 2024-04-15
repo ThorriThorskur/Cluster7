@@ -56,12 +56,17 @@
       <!-- Tour Table -->
       <TableView fx:id="tableTours">
          <columns>
-            <TableColumn fx:id="fxcolumnTourName" minWidth="100.0" prefWidth="172.0" text="Tour name" />
-            <TableColumn fx:id="fxcolumnAddress" minWidth="150.0" prefWidth="233.0" text="Description" />
+            <TableColumn fx:id="fxcolumnTourName" minWidth="120.0" prefWidth="172.0" text="Tour name" />
+            <TableColumn fx:id="fxcolumnDescription" minWidth="150.0" prefWidth="233.0" text="Description" />
             <TableColumn fx:id="fxcolumnDate" minWidth="0.0" prefWidth="82.0" text="Date" />
             <TableColumn fx:id="fxcolumnTime" minWidth="12.0" prefWidth="108.0" text="Category" />
             <TableColumn fx:id="fxcolumnRating" prefWidth="46.0" text="Rating" />
             <TableColumn fx:id="fxcolumnPrice" prefWidth="81.0" text="Price" />
+            <TableColumn fx:id="fxcolumnLocation" prefWidth="100.0" text="PickupLocation" />
+            <TableColumn fx:id="fxcolumnFamily" prefWidth="81.0" text="FamilyFriendy" />
+            <TableColumn fx:id="fxcolumnWheelchair" prefWidth="110.0" text="WheelchairAccessable" />
+            <TableColumn fx:id="fxcolumnAvailability" prefWidth="81.0" text="Available" />
+            <TableColumn fx:id="fxcolumnCapacity" prefWidth="81.0" text="Capacity" />
          </columns>
       </TableView>
 

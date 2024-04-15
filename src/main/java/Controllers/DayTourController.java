@@ -33,15 +33,25 @@ public class DayTourController implements InterfaceServiceController {
     @FXML
     private TableColumn<Tour, String> fxcolumnTourName;
     @FXML
-    private TableColumn<Tour, String> fxcolumnAddress;
+    private TableColumn<Tour, String> fxcolumnDescription;
     @FXML
     private TableColumn<Tour, LocalDateTime> fxcolumnDate;
     @FXML
-    private TableColumn<Tour, String> fxcolumnTime; // Assuming this should actually be category
+    private TableColumn<Tour, String> fxcolumnTime;
     @FXML
     private TableColumn<Tour, Float> fxcolumnRating;
     @FXML
     private TableColumn<Tour, Integer> fxcolumnPrice;
+    @FXML
+    private TableColumn<Tour, String> fxcolumnLocation;
+    @FXML
+    private TableColumn<Tour, Boolean> fxcolumnFamily;
+    @FXML
+    private TableColumn<Tour, Boolean> fxcolumnWheelchair;
+    @FXML
+    private TableColumn<Tour, Boolean> fxcolumnAvailability;
+    @FXML
+    private TableColumn<Tour, Integer> fxcolumnCapacity;
 
     private List<DayTourBooking> bookings;
 
@@ -54,11 +64,16 @@ public class DayTourController implements InterfaceServiceController {
 
     public void initialize() {
         fxcolumnTourName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        fxcolumnAddress.setCellValueFactory(new PropertyValueFactory<>("description"));
-        fxcolumnDate.setCellValueFactory(new PropertyValueFactory<>("dateOnly")); // Make sure the format is suitable
-        fxcolumnTime.setCellValueFactory(new PropertyValueFactory<>("category")); // Corrected to Category
+        fxcolumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        fxcolumnDate.setCellValueFactory(new PropertyValueFactory<>("dateOnly"));
+        fxcolumnTime.setCellValueFactory(new PropertyValueFactory<>("category"));
         fxcolumnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         fxcolumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        fxcolumnLocation.setCellValueFactory(new PropertyValueFactory<>("locationName"));
+        fxcolumnFamily.setCellValueFactory(new PropertyValueFactory<>("childSafe"));
+        fxcolumnWheelchair.setCellValueFactory(new PropertyValueFactory<>("wheelchairAccessible"));
+        fxcolumnAvailability.setCellValueFactory(new PropertyValueFactory<>("availability"));
+        fxcolumnCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
 
         ObservableList<String> categoryObs = FXCollections.observableArrayList(getCategories());
         fxCategory.setItems(categoryObs);
@@ -154,7 +169,7 @@ public class DayTourController implements InterfaceServiceController {
                 pstmt.setInt(6, (int) t.getRating());
                 pstmt.setString(7, t.getTimeDateTour().toString());
                 pstmt.setString(8, t.getLocation().getName());
-                pstmt.setBoolean(9, t.isChildSafe());
+                pstmt.setBoolean(9, t.getChildSafe());
                 pstmt.setBoolean(10, t.isWheelchairAccessible());
                 pstmt.setBoolean(11, t.isAvailability());
                 pstmt.setInt(12, t.getCapacity());

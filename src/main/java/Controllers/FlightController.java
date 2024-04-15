@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -69,6 +70,7 @@ public class FlightController implements InterfaceServiceController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Book Flight");
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {

@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="485.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FlightController">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FlightController">
    <children>
       <!-- Search Panel -->
       <GridPane hgap="10" vgap="10">
@@ -35,18 +45,18 @@
       <!-- Flight Table -->
       <TableView fx:id="tableFlights">
          <columns>
-            <TableColumn fx:id="columnFlightName" minWidth="80.0" text="Flight Name" />
-            <TableColumn fx:id="columnDeparture" minWidth="80.0" text="Departure" />
-            <TableColumn fx:id="columnArrival" minWidth="80.0" text="Arrival" />
-            <TableColumn fx:id="columnDepartureTime" minWidth="100.0" prefWidth="100.0" text="Departure Time" />
-            <TableColumn fx:id="columnArrivalTime" minWidth="100.0" prefWidth="100.0" text="Arrival Time" />
-            <TableColumn fx:id="columnPrice" minWidth="105.0" prefWidth="105.0" text="Price" />
+            <TableColumn fx:id="columnFlightName" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Flight Name" />
+            <TableColumn fx:id="columnDeparture" maxWidth="-Infinity" minWidth="165.0" prefWidth="165.0" text="Departure" />
+            <TableColumn fx:id="columnArrival" maxWidth="-Infinity" minWidth="165.0" prefWidth="165.0" text="Arrival" />
+            <TableColumn fx:id="columnDepartureTime" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Departure Time" />
+            <TableColumn fx:id="columnArrivalTime" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Arrival Time" />
+            <TableColumn fx:id="columnPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Price" />
          </columns>
       </TableView>
 
       <!-- Action Panel -->
       <HBox alignment="CENTER_RIGHT" spacing="10">
-         <Button fx:id="fxBookFlightButton" text="Book Flight" HBox.hgrow="ALWAYS" onAction="#handleBookFlight">
+         <Button fx:id="fxBookFlightButton" onAction="#handleBookFlight" text="Book Flight" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets top="5.0" />
             </HBox.margin>

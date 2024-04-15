@@ -3,17 +3,48 @@ package Controllers;
 import DayTours.DayTourBooking;
 import DayTours.Tour;
 import DayTours.User;
+import FlightSystem.Flight;
 import Interface.InterfaceService;
 import Interface.InterfaceServiceController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 
 import java.sql.*;
+import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class DayTourController implements InterfaceServiceController {
+
+    @FXML
+    TextField fxTourName;
+
+    @FXML
+    DatePicker fxDate;
+
+    @FXML
+    ChoiceBox fxCategory;
+
+    @FXML
+    private TableView<Tour> tableTours;
+
+    @FXML
+    private TableColumn<Tour, String> fxcolumnTourName;
+    @FXML
+    private TableColumn<Tour, String> fxcolumnAddress;
+    @FXML
+    private TableColumn<Tour, LocalDateTime> fxcolumnDate;
+    @FXML
+    private TableColumn<Tour, String> fxcolumnTime; // Assuming this should actually be category
+    @FXML
+    private TableColumn<Tour, Float> fxcolumnRating;
+    @FXML
+    private TableColumn<Tour, Integer> fxcolumnPrice;
 
     private List<DayTourBooking> bookings;
 
@@ -24,8 +55,18 @@ public class DayTourController implements InterfaceServiceController {
         this.bookings = new ArrayList<>();
     }
 
+    public void initialize() {
+        // Bind the table columns to the Tour properties
+        fxcolumnTourName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        fxcolumnAddress.setCellValueFactory(new PropertyValueFactory<>("description"));
+        fxcolumnDate.setCellValueFactory(new PropertyValueFactory<>("timeDateTour")); // Make sure the format is suitable
+        fxcolumnTime.setCellValueFactory(new PropertyValueFactory<>("category")); // Corrected to Category
+        fxcolumnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        fxcolumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
+
     public Collection<Tour> search(String query) {
-        List<Tour> foundTours = new ArrayList<>();
+        ArrayList<Tour> foundTours = new ArrayList<>();
         String sql = "SELECT * FROM Tours WHERE name LIKE ? OR description LIKE ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -140,6 +181,18 @@ public class DayTourController implements InterfaceServiceController {
         } catch (SQLException e) {
             System.out.println("Error occurred while booking the tour: " + e.getMessage());
         }
+    }
+
+    public void searchClick(ActionEvent actionEvent) throws SQLException, ParseException {
+        System.out.println("Whattup!");
+        ArrayList<Tour> tourArrayList = new ArrayList<>();
+        String tourName = fxTourName.getText();
+        String category = String.valueOf(fxCategory.getValue());
+        String date = String.valueOf(fxDate.getValue());
+
+        ObservableList<Tour> tourObs = FXCollections.observableArrayList(search(tourName));
+        System.out.println(Arrays.toString(search(tourName).toArray()));
+        tableTours.setItems(tourObs);
     }
 
     // Getters and setters

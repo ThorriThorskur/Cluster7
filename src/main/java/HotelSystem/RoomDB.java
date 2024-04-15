@@ -1,9 +1,7 @@
 package HotelSystem;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,5 +118,31 @@ public class RoomDB {
         } catch (SQLException e) {
             System.err.println("Error deleting room: " + e.getMessage());
         }
+    }
+
+    public List<Room> searchRoomsByHotelAndDates(String hotelName, LocalDate checkInDate, LocalDate checkOutDate) {
+        List<Room> rooms = new ArrayList<>();
+        // SQL query to select all rooms from the Rooms table where the hotelId matches a hotel name
+        String sql = "SELECT r.* FROM Rooms r " +
+                "JOIN Hotels h ON r.hotelId = h.hotelId " +
+                "WHERE h.name = ? AND r.available = 1"; // Only get available rooms
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, hotelName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Room room = new Room();
+                room.setRoomNumber(resultSet.getInt("roomNumber"));
+                room.setType(Room.RoomType.valueOf(resultSet.getString("type")));
+                room.setPricePerNight(resultSet.getDouble("pricePerNight"));
+                room.setIsAvailable(resultSet.getBoolean("available"));
+                rooms.add(room);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQLException occurred while retrieving rooms: " + e.getMessage());
+        }
+        return rooms;
     }
 }

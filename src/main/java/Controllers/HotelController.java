@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,10 @@ public class HotelController implements InterfaceServiceController {
     private TableColumn<Room, String> columnAvailability;
     @FXML
     private TableColumn<Room, Double> columnPricePerNight;
+    @FXML
+    private DatePicker dpCheckIn;
+    @FXML
+    private DatePicker dpCheckOut;
 
 
     private HotelDB hotelDB;
@@ -109,17 +114,21 @@ public class HotelController implements InterfaceServiceController {
     private void onHotelSearchButtonClicked() {
         System.out.println("Clicked");
         Hotel selectedHotel = cmbHotels.getValue(); // Assuming hotelSearchField is where the hotel name is entered
+        LocalDate checkInDate = dpCheckIn.getValue(); // Get selected check-in date from DatePicker
+        LocalDate checkOutDate = dpCheckOut.getValue(); // Get selected check-out date from DatePicker
 
-        if (selectedHotel != null) {
+        if (selectedHotel != null && checkInDate != null && checkOutDate != null) {
             String hotelName = selectedHotel.getName();
             Location hotelLocation = selectedHotel.getLocation();
 
-            List<Room> rooms = roomDB.searchRoomsByHotelName(hotelName);
+            List<Room> rooms = roomDB.searchRoomsByHotelAndDates(hotelName, checkInDate, checkOutDate);
             System.out.println(rooms);
             tableRooms.setItems(FXCollections.observableArrayList(rooms));
-
+        } else {
+            // Handle case when hotel or dates are not selected
         }
     }
+
     public void addService(InterfaceService service) {
         if (service instanceof Hotel) {
             Hotel hotel = (Hotel) service;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BookFlightController">
+    <top>
+        <HBox alignment="CENTER" spacing="10">
+            <Label style="-fx-font-size: 24px;" text="Book Flight" />
+        </HBox>
+    </top>
+    <center>
+        <GridPane>
+            <Label text="Seat:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="fxSeatChoiceBox" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Passenger Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="fxNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Number of Bags:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Spinner fx:id="fxBagsSpinner" initialValue="0" max="5" min="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Label text="Total Price:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <Label fx:id="fxPriceLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+            <CheckBox text="Paid?" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <Button text="Confirm Booking" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <Label fx:id="fxPriceField" prefHeight="18.0" prefWidth="149.0" text="0 kr" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+        </GridPane>
+    </center>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</BorderPane>

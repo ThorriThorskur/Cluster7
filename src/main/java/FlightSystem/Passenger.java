@@ -8,14 +8,16 @@ public class Passenger {
     private int passportNumber;
     private String address;
     private String phoneNumber;
+    private String email;
 
     //Constructor
-    public Passenger(String name, int passportNumber, String address, String phoneNumber) {
+    public Passenger(String name, int passportNumber, String address, String phoneNumber, String email) {
         id = UUID.randomUUID(); //setKennitala(kennitala); instead?
         this.name = name; //setName(name);?
         this.passportNumber = passportNumber; //setPassportnumber(passportNumber);?
         this.address = address; //setAddress(address);?
         this.phoneNumber = phoneNumber; //setPhonenumber(phoneNumber);?
+        this.email = email;
     }
 
     /*

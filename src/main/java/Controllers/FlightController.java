@@ -65,16 +65,21 @@ public class FlightController implements InterfaceServiceController {
 
     @FXML
     private void handleBookFlight() throws IOException {
-        try {
+        Flight selectedFlight = tableFlights.getSelectionModel().getSelectedItem();
+        if (selectedFlight != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/FlightBooking.fxml"));
             Parent root = loader.load();
+            BookFlightController controller = loader.getController();
+            controller.initData(selectedFlight);
+
             Stage stage = new Stage();
             stage.setTitle("Book Flight");
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            //show error message to the user maybe?
+            System.out.println("No flight selected.");
         }
     }
 

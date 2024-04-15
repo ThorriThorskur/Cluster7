@@ -3,7 +3,7 @@ package Interface;
 import java.util.Date;
 import java.util.UUID;
 
-public class InterfaceBooking {
+public abstract class InterfaceBooking {
     public enum ServiceType {
         Flight, Hotel, DayTrip
     }

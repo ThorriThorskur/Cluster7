@@ -1,11 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DayTourController">
+<VBox prefHeight="485.0" prefWidth="800.0" spacing="2.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HotelController">
    <children>
-      <Label layoutX="263.0" layoutY="183.0" prefHeight="35.0" prefWidth="75.0" text="Day Tours" />
+      <!-- Search Panel -->
+      <GridPane hgap="10" vgap="10">
+         <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="66.0" text="Tour Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+         <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="30.0" text="Date:" GridPane.columnIndex="2" />
+         <DatePicker fx:id="fxDate" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="3" />
+         <Label GridPane.columnIndex="12" />
+         <TextField fx:id="fxTourName" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" />
+         <Label minHeight="-Infinity" prefHeight="17.0" prefWidth="60.0" text="Category:" GridPane.columnIndex="4" />
+         <ChoiceBox fx:id="fxCategory" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="5" />
+         <Button fx:id="fxSearchButton" minWidth="60.0" mnemonicParsing="false" prefWidth="60.0" text="Search" GridPane.columnIndex="6" />
+         <columnConstraints>
+            <ColumnConstraints minWidth="65.0" />
+            <ColumnConstraints minWidth="100.0" />
+            <ColumnConstraints minWidth="30.0" prefWidth="30.0" />
+            <ColumnConstraints minWidth="100.0" />
+            <ColumnConstraints maxWidth="76.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints maxWidth="209.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints maxWidth="209.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <!-- Tour Table -->
+      <TableView fx:id="tableTours">
+         <columns>
+            <TableColumn fx:id="fxcolumnTourName" minWidth="100.0" prefWidth="172.0" text="Tour name" />
+            <TableColumn fx:id="fxcolumnAddress" minWidth="150.0" prefWidth="233.0" text="Description" />
+            <TableColumn fx:id="fxcolumnDate" minWidth="0.0" prefWidth="82.0" text="Date" />
+            <TableColumn fx:id="fxcolumnTime" minWidth="12.0" prefWidth="108.0" text="Category" />
+            <TableColumn prefWidth="46.0" text="Rating" />
+            <TableColumn prefWidth="81.0" text="Price" />
+         </columns>
+      </TableView>
+
+      <!-- Action Panel -->
+      <HBox alignment="CENTER_RIGHT" spacing="10">
+         <Button fx:id="fxBookTourButton" text="Book Tour" HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets top="2.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
    </children>
-</AnchorPane>
+   <padding>
+      <Insets top="2.0" />
+   </padding>
+</VBox>

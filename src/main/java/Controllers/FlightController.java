@@ -10,8 +10,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +63,20 @@ public class FlightController implements InterfaceServiceController {
     @FXML
     private TableColumn<Flight, String> columnPrice;
 
-
+    @FXML
+    private void handleBookFlight() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/FlightBooking.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Book Flight");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initialize() throws ClassNotFoundException {
         this.db = new FlightDB();
@@ -108,7 +127,6 @@ public class FlightController implements InterfaceServiceController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
     }
 
     @Override
@@ -125,7 +143,6 @@ public class FlightController implements InterfaceServiceController {
     public ArrayList<Flight> searchFlightsWithPrice(String departureLocation, String arrivalLocation, String date, int maxPrice) throws SQLException, ParseException {
         ArrayList<Flight> unfilteredFlights = searchFlights(departureLocation, arrivalLocation, date);
         ArrayList<Flight> filteredFlights = new ArrayList<>();
-        
         for (Flight flight : unfilteredFlights) {
             if (flight.getStartingPrice() <= maxPrice) {
                 filteredFlights.add(flight);

@@ -1,9 +1,7 @@
 package HotelSystem;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,14 +17,13 @@ public class ReservationDB {
             statement.setInt(1, reservationId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    int guestId = resultSet.getInt("guestId");
                     int roomId = resultSet.getInt("roomId");
-                    Date checkInDate = new Date(resultSet.getDate("checkInDate").getTime()); // Convert java.sql.Date to java.util.Date
-                    Date checkOutDate = new Date(resultSet.getDate("checkOutDate").getTime()); // Convert java.sql.Date to java.util.Date
+                    LocalDate checkInDate = resultSet.getDate("checkInDate").toLocalDate();
+                    LocalDate checkOutDate = resultSet.getDate("checkOutDate").toLocalDate();
                     double totalCost = resultSet.getDouble("totalCost");
 
                     // Now initialize the Reservation object using the constructor
-                    reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate);
+                    reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate, totalCost);
                     reservation.setTotalCost(totalCost); // Set the total cost if it needs to be stored separately
                 }
             }
@@ -38,6 +35,7 @@ public class ReservationDB {
     }
 
 
+    /*
     public List<Reservation> selectAllByGuest(int guestId) {
         List<Reservation> reservations = new ArrayList<>();
         String sql = "SELECT * FROM Reservations WHERE guestId = ?";
@@ -53,7 +51,7 @@ public class ReservationDB {
                     Date checkOutDate = new Date(resultSet.getDate("checkOutDate").getTime()); // Convert java.sql.Date to java.util.Date
                     double totalCost = resultSet.getDouble("totalCost");
 
-                    Reservation reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate);
+                    Reservation reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate, totalCost);
                     reservation.setTotalCost(totalCost);
                     reservations.add(reservation);
                 }
@@ -63,14 +61,16 @@ public class ReservationDB {
         }
         return reservations;
     }
+
+ */
     public void update(Reservation reservation) {
         String sql = "UPDATE Reservations SET roomId = ?, checkInDate = ?, checkOutDate = ?, totalCost = ? WHERE reservationId = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, reservation.getRoomId());
-            statement.setDate(2, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDate(3, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDate(2, java.sql.Date.valueOf(reservation.getCheckInDate()));
+            statement.setDate(3, java.sql.Date.valueOf(reservation.getCheckOutDate()));
             statement.setDouble(4, reservation.getTotalCost());
             statement.setInt(5, reservation.getReservationID());
 
@@ -83,18 +83,25 @@ public class ReservationDB {
         }
     }
     public static void insert(Reservation reservation) {
-        String sql = "INSERT INTO Reservations ( roomId, checkInDate, checkOutDate, totalCost) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Reservations (roomId, checkInDate, checkOutDate, totalCost, reservationId) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, reservation.getRoomId());
-            statement.setDate(2, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDate(3, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDate(2, java.sql.Date.valueOf(reservation.getCheckInDate()));
+            statement.setDate(3, java.sql.Date.valueOf(reservation.getCheckOutDate()));
             statement.setDouble(4, reservation.getTotalCost());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Reservation inserted successfully.");
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int reservationId = generatedKeys.getInt(1);
+                        System.out.println("Reservation inserted successfully with ID: " + reservationId);
+                    } else {
+                        System.err.println("Failed to retrieve generated reservation ID.");
+                    }
+                }
             } else {
                 System.err.println("Failed to insert reservation.");
             }
@@ -102,6 +109,7 @@ public class ReservationDB {
             System.err.println("Error inserting reservation: " + e.getMessage());
         }
     }
+
     public void delete(int reservationId) {
         String sql = "DELETE FROM Reservations WHERE reservationId = ?";
 

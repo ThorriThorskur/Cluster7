@@ -69,6 +69,10 @@ public class FlightController implements InterfaceServiceController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/FlightBooking.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
+
+            BookFlightController controller = loader.getController();
+            controller.setFlight(tableFlights.getSelectionModel().getSelectedItem());
+
             stage.setTitle("Book Flight");
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));

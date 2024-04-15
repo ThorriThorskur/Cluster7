@@ -8,4 +8,6 @@ module team.t.hugb {
 
     opens Controllers to javafx.fxml;
     exports Controllers;
+
+    opens DayTours to javafx.base;
 }

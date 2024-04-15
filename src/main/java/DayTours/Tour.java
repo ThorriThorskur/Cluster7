@@ -3,6 +3,7 @@ package DayTours;
 import EngineStuff.Location;
 import Interface.InterfaceService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,14 +13,22 @@ public class Tour extends InterfaceService {
     private String name;
     private String description;
 
-
-
     private Float price;
 
     @Override
     public Location getLocation() {
         return location;
     }
+
+    public String getLocationName() {
+        return location.getName();
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    private String locationName;
 
     @Override
     public void setLocation(Location location) {
@@ -49,6 +58,16 @@ public class Tour extends InterfaceService {
     }
 
     private LocalDateTime timeDateTour;
+
+    public LocalDate getDateOnly() {
+        return timeDateTour.toLocalDate();
+    }
+
+    public void setDateOnly(LocalDate dateOnly) {
+        this.dateOnly = dateOnly;
+    }
+
+    private LocalDate dateOnly;
 
     private int distance;
 
@@ -112,7 +131,7 @@ public class Tour extends InterfaceService {
         this.distance = distance;
     }
 
-    public boolean isChildSafe() {
+    public boolean getChildSafe() {
         return childSafe;
     }
 

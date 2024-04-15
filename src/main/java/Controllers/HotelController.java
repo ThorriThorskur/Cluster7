@@ -10,6 +10,8 @@ import HotelSystem.RoomDB;
 import HotelSystem.Reservation;
 import HotelSystem.ReservationDB;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -84,11 +86,19 @@ public class HotelController implements InterfaceServiceController {
     }
 
     private void setupTableColumns() {
-        columnRoomNumber.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
-        columnRoomType.setCellValueFactory(new PropertyValueFactory<>("roomType"));
-        columnAvailability.setCellValueFactory(new PropertyValueFactory<>("checkInDate"));
-        columnPricePerNight.setCellValueFactory(new PropertyValueFactory<>("pricePerNight"));
+        columnRoomNumber.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.valueOf(cellData.getValue().getRoomNumber())));
+
+        columnRoomType.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getType().toString()));
+
+        columnAvailability.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().isAvailable() ? "Available" : "Unavailable"));
+
+        columnPricePerNight.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getPricePerNight()).asObject());
     }
+
     public List<Hotel> search(String query) {
         // Assuming the HotelDB has a method to search hotels by name or location
         return hotelDB.searchHotels(query);

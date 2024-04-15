@@ -9,10 +9,10 @@ public class Room {
     private boolean isAvailable;
 
     public enum RoomType {
-        SINGLE,
-        DOUBLE,
-        SUITE,
-        DELUXE
+        Single,
+        Double,
+        Suite,
+        Deluxe
     }
 
     public int getRoomNumber() {

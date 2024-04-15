@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,7 +113,7 @@ public class HotelController implements InterfaceServiceController {
 
     @FXML
     private void onHotelSearchButtonClicked() {
-        System.out.println("Please select your dates");
+        System.out.println("Clicked");
         Hotel selectedHotel = cmbHotels.getValue(); // Assuming hotelSearchField is where the hotel name is entered
         LocalDate checkInDate = dpCheckIn.getValue(); // Get selected check-in date from DatePicker
         LocalDate checkOutDate = dpCheckOut.getValue(); // Get selected check-out date from DatePicker
@@ -124,10 +125,34 @@ public class HotelController implements InterfaceServiceController {
             List<Room> rooms = roomDB.searchRoomsByHotelAndDates(hotelName, checkInDate, checkOutDate);
             System.out.println(rooms);
             tableRooms.setItems(FXCollections.observableArrayList(rooms));
+
+            // Assuming only one room can be selected for reservation
+            if (!rooms.isEmpty()) {
+                Room selectedRoom = rooms.get(0); // Get the first available room
+                double pricePerNight = selectedRoom.getPricePerNight();
+
+                // Calculate the number of days between check-in and check-out dates
+                long numOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+
+                // Calculate the total cost
+                double totalCost = numOfDays * pricePerNight;
+
+                // Insert the reservation into the Reservations table
+                Reservation newReservation = new Reservation(selectedRoom.getRoomId(), checkInDate, checkOutDate, totalCost);
+                ReservationDB.insert(newReservation);
+
+                // Optional: Display a confirmation message
+                System.out.println("Reservation created successfully: " + newReservation);
+            } else {
+                // Handle case when no rooms are available
+                System.out.println("No rooms available for the selected dates.");
+            }
         } else {
             // Handle case when hotel or dates are not selected
+            System.out.println("Please select a hotel and specify check-in/check-out dates.");
         }
     }
+
 
     public void addService(InterfaceService service) {
         if (service instanceof Hotel) {

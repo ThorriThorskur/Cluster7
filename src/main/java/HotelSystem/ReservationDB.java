@@ -26,7 +26,7 @@ public class ReservationDB {
                     double totalCost = resultSet.getDouble("totalCost");
 
                     // Now initialize the Reservation object using the constructor
-                    reservation = new Reservation(reservationId, guestId, roomId, checkInDate, checkOutDate);
+                    reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate);
                     reservation.setTotalCost(totalCost); // Set the total cost if it needs to be stored separately
                 }
             }
@@ -53,7 +53,7 @@ public class ReservationDB {
                     Date checkOutDate = new Date(resultSet.getDate("checkOutDate").getTime()); // Convert java.sql.Date to java.util.Date
                     double totalCost = resultSet.getDouble("totalCost");
 
-                    Reservation reservation = new Reservation(reservationId, guestId, roomId, checkInDate, checkOutDate);
+                    Reservation reservation = new Reservation(reservationId, roomId, checkInDate, checkOutDate);
                     reservation.setTotalCost(totalCost);
                     reservations.add(reservation);
                 }
@@ -64,16 +64,15 @@ public class ReservationDB {
         return reservations;
     }
     public void update(Reservation reservation) {
-        String sql = "UPDATE Reservations SET guestId = ?, roomId = ?, checkInDate = ?, checkOutDate = ?, totalCost = ? WHERE reservationId = ?";
+        String sql = "UPDATE Reservations SET roomId = ?, checkInDate = ?, checkOutDate = ?, totalCost = ? WHERE reservationId = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, reservation.getGuestId());
-            statement.setInt(2, reservation.getRoomId());
-            statement.setDate(3, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDate(4, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDouble(5, reservation.getTotalCost());
-            statement.setInt(6, reservation.getReservationID());
+            statement.setInt(1, reservation.getRoomId());
+            statement.setDate(2, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDate(3, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDouble(4, reservation.getTotalCost());
+            statement.setInt(5, reservation.getReservationID());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -83,16 +82,15 @@ public class ReservationDB {
             System.err.println("Error updating reservation: " + e.getMessage());
         }
     }
-    public void insert(Reservation reservation) {
-        String sql = "INSERT INTO Reservations (guestId, roomId, checkInDate, checkOutDate, totalCost) VALUES (?, ?, ?, ?, ?)";
+    public static void insert(Reservation reservation) {
+        String sql = "INSERT INTO Reservations ( roomId, checkInDate, checkOutDate, totalCost) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, reservation.getGuestId());
-            statement.setInt(2, reservation.getRoomId());
-            statement.setDate(3, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDate(4, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
-            statement.setDouble(5, reservation.getTotalCost());
+            statement.setInt(1, reservation.getRoomId());
+            statement.setDate(2, new java.sql.Date(reservation.getCheckInDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDate(3, new java.sql.Date(reservation.getCheckOutDate().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setDouble(4, reservation.getTotalCost());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows > 0) {

@@ -12,9 +12,8 @@ public class Reservation {
     private int roomId;
 
     // Constructor
-    public Reservation(int reservationId,int guestId, int roomId, Date checkInDate, Date checkOutDate) {
+    public Reservation(int reservationId, int roomId, Date checkInDate, Date checkOutDate) {
         this.reservationId = reservationId;
-        this.guestId = guestId;
         this.roomId = roomId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
@@ -40,14 +39,6 @@ public class Reservation {
 
     public void setCheckInDate(Date checkInDate) {
         this.checkInDate = checkInDate;
-    }
-
-    public int getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(int guestId) {
-        this.guestId = guestId;
     }
 
     public int getRoomId() {

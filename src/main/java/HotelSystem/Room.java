@@ -7,6 +7,7 @@ public class Room {
     private RoomType type;
     private double pricePerNight;
     private boolean isAvailable;
+    private int roomId;
 
     public enum RoomType {
         Single,
@@ -21,6 +22,14 @@ public class Room {
 
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public RoomType getType() {

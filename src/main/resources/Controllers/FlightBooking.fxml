@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
@@ -17,6 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane style="-fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BookFlightController">
    <children>
       <BorderPane minHeight="-Infinity" minWidth="-Infinity">
@@ -30,13 +30,13 @@
                     </HBox>
                   <HBox alignment="CENTER" prefHeight="28.0" prefWidth="265.0">
                      <children>
-                        <Label fx:id="fxDeparture" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="125.0" text="example" />
+                        <Label fx:id="fxDeparture" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="175.0" text="example" />
                         <Label alignment="CENTER" prefHeight="20.0" prefWidth="20.0" text="→">
                            <font>
                               <Font name="Cascadia Mono Regular" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="fxArrival" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="125.0" text="example" />
+                        <Label fx:id="fxArrival" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="175.0" text="example" />
                      </children>
                   </HBox>
                </children>
@@ -46,10 +46,10 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <center>
-              <GridPane prefHeight="218.0" prefWidth="265.0" BorderPane.alignment="CENTER">
+              <GridPane alignment="CENTER" prefHeight="227.0" prefWidth="293.0" BorderPane.alignment="CENTER">
                   <Label prefHeight="17.0" prefWidth="54.0" text="Seat:" GridPane.rowIndex="7" />
-                  <ChoiceBox fx:id="fxSeatChoiceBox" prefHeight="26.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      
+                  <ComboBox fx:id="fxSeatChoice" minHeight="-Infinity" prefHeight="25.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
                   <Label text="Email:" GridPane.rowIndex="3" />
                   <TextField fx:id="fxEmail" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       
@@ -58,17 +58,15 @@
       
                   <Label text="Total Price:" GridPane.rowIndex="10" />
                   <Label fx:id="fxPriceLabel" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-               <Label fx:id="fxPriceField" prefHeight="18.0" prefWidth="149.0" text="0 kr" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+               <Label fx:id="fxTotalPrice" prefHeight="18.0" prefWidth="149.0" text="0 kr" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                <Label text="Phone number:" GridPane.rowIndex="4" />
                <Label text="Passenger name:" GridPane.rowIndex="1" />
-               <TextField fx:id="fxNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <Label text="Date of birth:" GridPane.rowIndex="2" />
-               <DatePicker prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               <TextField fx:id="fxName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField fx:id="fxPhoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                <Label text="Address:" GridPane.rowIndex="5" />
-               <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               <TextField fx:id="fxAddress" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                <Label text="Passport number:" GridPane.rowIndex="6" />
-               <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <TextField fx:id="fxPassportNumber" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />
@@ -96,15 +94,24 @@
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
               </GridPane>
          </center>
          <bottom>
-            <Pane prefHeight="25.0" prefWidth="235.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="30.0" prefWidth="361.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Confirm booking" />
-                  <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
-                  <Label fx:id="fxErrorMessage" layoutX="62.0" prefHeight="25.0" prefWidth="95.0" text="//Error message" />
+                  <Button layoutX="201.0" mnemonicParsing="false" onAction="#handleConfirmBooking" prefHeight="25.0" prefWidth="107.0" text="Confirm booking" />
+                  <Button layoutX="52.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
+                  <Label fx:id="fxErrorMessage" layoutX="107.0" prefHeight="25.0" prefWidth="93.0" text="//Error message" />
                </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" />
+               </BorderPane.margin>
             </Pane>
          </bottom>
       </BorderPane>

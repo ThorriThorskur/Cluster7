@@ -112,7 +112,7 @@ public class HotelController implements InterfaceServiceController {
 
     @FXML
     private void onHotelSearchButtonClicked() {
-        System.out.println("Clicked");
+        System.out.println("Please select your dates");
         Hotel selectedHotel = cmbHotels.getValue(); // Assuming hotelSearchField is where the hotel name is entered
         LocalDate checkInDate = dpCheckIn.getValue(); // Get selected check-in date from DatePicker
         LocalDate checkOutDate = dpCheckOut.getValue(); // Get selected check-out date from DatePicker

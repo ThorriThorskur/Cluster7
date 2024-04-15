@@ -59,10 +59,13 @@ public class DayTourController implements InterfaceServiceController {
         // Bind the table columns to the Tour properties
         fxcolumnTourName.setCellValueFactory(new PropertyValueFactory<>("name"));
         fxcolumnAddress.setCellValueFactory(new PropertyValueFactory<>("description"));
-        fxcolumnDate.setCellValueFactory(new PropertyValueFactory<>("timeDateTour")); // Make sure the format is suitable
+        fxcolumnDate.setCellValueFactory(new PropertyValueFactory<>("dateOnly")); // Make sure the format is suitable
         fxcolumnTime.setCellValueFactory(new PropertyValueFactory<>("category")); // Corrected to Category
         fxcolumnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         fxcolumnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        ObservableList<String> categoryObs = FXCollections.observableArrayList(getCategories());
+        fxCategory.setItems(categoryObs);
     }
 
     public Collection<Tour> search(String query) {
@@ -184,15 +187,32 @@ public class DayTourController implements InterfaceServiceController {
     }
 
     public void searchClick(ActionEvent actionEvent) throws SQLException, ParseException {
-        System.out.println("Whattup!");
         ArrayList<Tour> tourArrayList = new ArrayList<>();
         String tourName = fxTourName.getText();
         String category = String.valueOf(fxCategory.getValue());
         String date = String.valueOf(fxDate.getValue());
 
         ObservableList<Tour> tourObs = FXCollections.observableArrayList(search(tourName));
-        System.out.println(Arrays.toString(search(tourName).toArray()));
         tableTours.setItems(tourObs);
+    }
+
+    public static ArrayList<String> getCategories() {
+        ArrayList<String> categories = new ArrayList<>();
+        String sql = "SELECT DISTINCT category FROM tours";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                categories.add(rs.getString("category"));
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error occurred while fetching categories: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return categories;
     }
 
     // Getters and setters

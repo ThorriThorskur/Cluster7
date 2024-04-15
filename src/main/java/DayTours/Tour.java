@@ -3,6 +3,7 @@ package DayTours;
 import EngineStuff.Location;
 import Interface.InterfaceService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -49,6 +50,16 @@ public class Tour extends InterfaceService {
     }
 
     private LocalDateTime timeDateTour;
+
+    public LocalDate getDateOnly() {
+        return timeDateTour.toLocalDate();
+    }
+
+    public void setDateOnly(LocalDate dateOnly) {
+        this.dateOnly = dateOnly;
+    }
+
+    private LocalDate dateOnly;
 
     private int distance;
 

@@ -56,7 +56,6 @@ public class BookFlightController {
         bookingFlightDB = new BookingFlightDB();
         fxTotalPrice.setText(String.valueOf(selectedFlight.getStartingPrice() ));
         createPriceBinding();
-
     }
 
     private void createPriceBinding() {
@@ -97,6 +96,8 @@ public class BookFlightController {
             BookingFlight booking = new BookingFlight(selectedFlight, seat, passenger, false, bags);
             selectedFlight.getSeat(seat.getSeatName()).setBooked(true);
             bookingFlightDB.insert(booking);
+            initData(selectedFlight);
+            clearFields();
 
             System.out.println("Booking created with ID: " + booking.getId());
             setErrorMessage("Booking successful: " + booking.getId());
@@ -104,6 +105,17 @@ public class BookFlightController {
             setErrorMessage("Please fill all fields correctly.");
         }
     }
+
+    private void clearFields(){
+       fxName.clear();
+       fxPassportNumber.clear();
+       fxAddress.clear();
+       fxEmail.clear();
+       fxPhoneNumber.clear();
+       fxBagsSpinner.getValueFactory().setValue(0);
+       fxSeatChoice.getSelectionModel().clearSelection();
+    }
+
 
     private boolean validateInput(String name, int passportNumber, String address, String email, String phoneNumber) {
         return !(name.isBlank() || address.isBlank() || email.isBlank() || !email.contains("@") || phoneNumber.isBlank());

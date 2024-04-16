@@ -2,6 +2,8 @@ package HotelSystem;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,7 +74,6 @@ public class ReservationDB {
             statement.setDate(2, java.sql.Date.valueOf(reservation.getCheckInDate()));
             statement.setDate(3, java.sql.Date.valueOf(reservation.getCheckOutDate()));
             statement.setDouble(4, reservation.getTotalCost());
-            statement.setInt(5, reservation.getReservationID());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -83,32 +84,39 @@ public class ReservationDB {
         }
     }
     public static void insert(Reservation reservation) {
-        String sql = "INSERT INTO Reservations (roomId, checkInDate, checkOutDate, totalCost, reservationId) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Reservations (roomId, checkInDate, checkOutDate, totalCost) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, reservation.getRoomId());
-            statement.setDate(2, java.sql.Date.valueOf(reservation.getCheckInDate()));
-            statement.setDate(3, java.sql.Date.valueOf(reservation.getCheckOutDate()));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String checkInDateStr = reservation.getCheckInDate().format(formatter);
+            String checkOutDateStr = reservation.getCheckOutDate().format(formatter);
+            statement.setInt(1, reservation.getRoomId());
+            statement.setString(2, checkInDateStr);
+            statement.setString(3, checkOutDateStr);
             statement.setDouble(4, reservation.getTotalCost());
 
             int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int reservationId = generatedKeys.getInt(1);
-                        System.out.println("Reservation inserted successfully with ID: " + reservationId);
-                    } else {
-                        System.err.println("Failed to retrieve generated reservation ID.");
-                    }
+            if (affectedRows == 0) {
+                throw new SQLException("Creating reservation failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int reservationId = generatedKeys.getInt(1);
+                    reservation.setReservationID(reservationId);
+                } else {
+                    throw new SQLException("Creating reservation failed, no ID obtained.");
                 }
-            } else {
-                System.err.println("Failed to insert reservation.");
             }
         } catch (SQLException e) {
             System.err.println("Error inserting reservation: " + e.getMessage());
         }
     }
+
+
 
     public void delete(int reservationId) {
         String sql = "DELETE FROM Reservations WHERE reservationId = ?";
@@ -125,5 +133,22 @@ public class ReservationDB {
         } catch (SQLException e) {
             System.err.println("Error deleting reservation: " + e.getMessage());
         }
+    }
+
+    public static void createReservation(Room selectedRoom, LocalDate checkInDate, LocalDate checkOutDate) {
+        double pricePerNight = selectedRoom.getPricePerNight();
+
+        // Calculate the number of days between check-in and check-out dates
+        long numOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+
+        // Calculate the total cost
+        double totalCost = numOfDays * pricePerNight;
+
+        // Insert the reservation into the Reservations table
+        Reservation newReservation = new Reservation(0, selectedRoom.getRoomId(), checkInDate, checkOutDate, totalCost);
+        ReservationDB.insert(newReservation);
+
+        // Optional: Display a confirmation message
+        System.out.println("Reservation created successfully: " + newReservation);
     }
 }

@@ -138,6 +138,7 @@ public class RoomDB {
                 room.setType(Room.RoomType.valueOf(resultSet.getString("type")));
                 room.setPricePerNight(resultSet.getDouble("pricePerNight"));
                 room.setIsAvailable(resultSet.getBoolean("available"));
+                room.setRoomId(resultSet.getInt("roomId"));
                 rooms.add(room);
             }
         } catch (SQLException e) {

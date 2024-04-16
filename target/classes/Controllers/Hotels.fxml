@@ -11,14 +11,15 @@
       <!-- Search Panel -->
       <GridPane hgap="10" vgap="10">
          <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        
          <ChoiceBox fx:id="cmbLocation" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
          </ChoiceBox>
 
          <Label text="Check-in Date:" GridPane.rowIndex="1" />
-         <DatePicker fx:id="dpCheckIn" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckOut" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
          <Label text="Check-out Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         <DatePicker fx:id="dpCheckOut" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <DatePicker fx:id="dpCheckIn" prefHeight="25.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
          <Label text="Max Price per Night:" GridPane.columnIndex="5" />
          <TextField fx:id="txtMaxPrice" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
@@ -59,7 +60,7 @@
 
       <!-- Action Panel -->
       <HBox alignment="CENTER_RIGHT" spacing="10">
-         <Button fx:id="bookHotelButton" text="Book Hotel" HBox.hgrow="ALWAYS">
+         <Button fx:id="bookHotelButton" onAction="#onBookHotelButtonClicked" text="Book Hotel" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets top="2.0" />
             </HBox.margin>

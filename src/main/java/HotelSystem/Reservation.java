@@ -18,7 +18,7 @@ public class Reservation {
         this.roomId = roomId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.totalCost = 0.0;
+        this.totalCost = totalCost;
     }
 
     public double calculateTotalCost() {

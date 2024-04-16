@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public abstract class InterfaceBooking {
     public enum ServiceType {
-        Flight, Hotel, DayTrip
+        Flight, Hotel, Tour
     }
 
     private UUID bookingId;

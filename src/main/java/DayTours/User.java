@@ -57,12 +57,6 @@ public class User {
         this.bookings = new ArrayList<>();
         this.name = name;
         this.email = email;
-
-
-    }
-
-    // Method to update user profile
-    public void updateProfile() {
     }
 
     public UUID getId() {

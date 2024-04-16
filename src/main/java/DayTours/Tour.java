@@ -74,13 +74,6 @@ public class Tour extends InterfaceService {
     private boolean availability;
     private int capacity;
 
-    enum Language {
-        ICELANDIC,
-        ENGLISH,
-        FRENCH,
-        GERMAN,
-        POLISH
-    }
 
     public String getName() {
         return name;
@@ -153,6 +146,14 @@ public class Tour extends InterfaceService {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    enum Language {
+        ICELANDIC,
+        ENGLISH,
+        FRENCH,
+        GERMAN,
+        POLISH
     }
 
 

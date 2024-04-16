@@ -1,9 +1,6 @@
 package Controllers;
-
 import DayTours.DayTourBooking;
 import DayTours.Tour;
-import DayTours.User;
-import FlightSystem.Flight;
 import Interface.InterfaceService;
 import Interface.InterfaceServiceController;
 import javafx.collections.FXCollections;
@@ -17,11 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 import java.sql.*;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -58,25 +52,34 @@ public class DayTourController implements InterfaceServiceController {
     private TableColumn<Tour, Boolean> fxcolumnAvailability;
     @FXML
     private TableColumn<Tour, Integer> fxcolumnCapacity;
+    @FXML
+    private TableColumn<Tour, UUID> fxcoloumnID;
 
     private List<DayTourBooking> bookings;
 
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/Databases/tours.db";
 
     @FXML
-    private void handleBookTour() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
-        Parent root = loader.load();
+    private void handleBookTour() throws IOException, ClassNotFoundException, SQLException {
+        try { Tour selectedTour = tableTours.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
+            Parent root = loader.load();
+            BookDayTourController controller = loader.getController();
+            controller.initData(selectedTour, this);
 
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Book Day Tour");
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Book Day Tour");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+       }
+       catch (Exception e)
+       {
+           System.out.println("No tour was chosen.");
+       }
     }
 
     public DayTourController() {
-
         this.bookings = new ArrayList<>();
     }
 
@@ -92,6 +95,8 @@ public class DayTourController implements InterfaceServiceController {
         fxcolumnWheelchair.setCellValueFactory(new PropertyValueFactory<>("wheelchairAccessible"));
         fxcolumnAvailability.setCellValueFactory(new PropertyValueFactory<>("availability"));
         fxcolumnCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+        fxcoloumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+
 
         ObservableList<String> categoryObs = FXCollections.observableArrayList(getCategories());
         fxCategory.setItems(categoryObs);

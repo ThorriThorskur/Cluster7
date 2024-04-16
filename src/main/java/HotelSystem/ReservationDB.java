@@ -3,7 +3,6 @@ package HotelSystem;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,14 +87,13 @@ public class ReservationDB {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, reservation.getRoomId());
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String checkInDateStr = reservation.getCheckInDate().format(formatter);
-            String checkOutDateStr = reservation.getCheckOutDate().format(formatter);
+            java.sql.Date sqlCheckInDate = java.sql.Date.valueOf(reservation.getCheckInDate());
+            java.sql.Date sqlCheckOutDate = java.sql.Date.valueOf(reservation.getCheckOutDate());
+
             statement.setInt(1, reservation.getRoomId());
-            statement.setString(2, checkInDateStr);
-            statement.setString(3, checkOutDateStr);
+            statement.setDate(2, sqlCheckInDate);
+            statement.setDate(3, sqlCheckOutDate);
             statement.setDouble(4, reservation.getTotalCost());
 
             int affectedRows = statement.executeUpdate();
@@ -103,6 +101,7 @@ public class ReservationDB {
                 throw new SQLException("Creating reservation failed, no rows affected.");
             }
 
+            // Handling the generated keys to get the reservation ID
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int reservationId = generatedKeys.getInt(1);
@@ -135,20 +134,20 @@ public class ReservationDB {
         }
     }
 
-    public static void createReservation(Room selectedRoom, LocalDate checkInDate, LocalDate checkOutDate) {
+    public static Reservation createReservation(Room selectedRoom, LocalDate checkInDate, LocalDate checkOutDate) {
         double pricePerNight = selectedRoom.getPricePerNight();
-
-        // Calculate the number of days between check-in and check-out dates
-        long numOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-
-        // Calculate the total cost
+        long numOfDays = 2;//ChronoUnit.DAYS.between(checkInDate, checkOutDate);
         double totalCost = numOfDays * pricePerNight;
 
-        // Insert the reservation into the Reservations table
         Reservation newReservation = new Reservation(0, selectedRoom.getRoomId(), checkInDate, checkOutDate, totalCost);
         ReservationDB.insert(newReservation);
 
-        // Optional: Display a confirmation message
-        System.out.println("Reservation created successfully: " + newReservation);
+        if (newReservation != null) {
+            System.out.println("Reservation created successfully: " + newReservation);
+            return newReservation;
+        } else {
+            System.err.println("Failed to create reservation.");
+            return null;
+        }
     }
 }

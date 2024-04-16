@@ -1,13 +1,10 @@
 package Controllers;
 
+import EngineStuff.Cart;
 import EngineStuff.Location;
+import HotelSystem.*;
 import Interface.InterfaceService;
 import Interface.InterfaceServiceController;
-import HotelSystem.Hotel;
-import HotelSystem.HotelDB;
-import HotelSystem.Room;
-import HotelSystem.RoomDB;
-import HotelSystem.ReservationDB;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -149,7 +146,8 @@ public class HotelController implements InterfaceServiceController {
         LocalDate checkOutDate = dpCheckOut.getValue();
 
         if (selectedRoom != null && checkInDate != null && checkOutDate != null) {
-            ReservationDB.createReservation(selectedRoom, checkInDate, checkOutDate);
+            Reservation reservation = ReservationDB.createReservation(selectedRoom, checkInDate, checkOutDate);
+            Cart.getInstance().addBooking(reservation);
             System.out.println("Booked hotel");
         } else {
             // Handle case when room or dates are not selected

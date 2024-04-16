@@ -1,10 +1,11 @@
 package HotelSystem;
 
+import Interface.InterfaceBooking;
 import Interface.InterfaceService;
 
 import java.time.LocalDate;
 import java.util.Date;
-public class Reservation {
+public class Reservation extends InterfaceBooking {
     private int reservationId;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -14,6 +15,7 @@ public class Reservation {
 
     // Constructor
     public Reservation(int reservationId, int roomId, LocalDate checkInDate, LocalDate checkOutDate, Double totalCost) {
+        super(InterfaceBooking.ServiceType.Hotel);
         this.reservationId = reservationId;
         this.roomId = roomId;
         this.checkInDate = checkInDate;
@@ -65,5 +67,11 @@ public class Reservation {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    @Override
+    public String toString() {
+        return "Room Reservation " + reservationId +
+                " - " + (int) totalCost + " kr";
     }
 }

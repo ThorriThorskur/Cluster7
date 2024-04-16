@@ -15,8 +15,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 import java.io.IOException;
@@ -62,6 +62,18 @@ public class DayTourController implements InterfaceServiceController {
     private List<DayTourBooking> bookings;
 
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/Databases/tours.db";
+
+    @FXML
+    private void handleBookTour() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Book Day Tour");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 
     public DayTourController() {
 
@@ -335,30 +347,6 @@ public class DayTourController implements InterfaceServiceController {
 
         return categories;
     }
-
-
-
-    @FXML
-    private void handleBookTour() throws IOException, ClassNotFoundException {
-        Tour selectedTour = tableTours.getSelectionModel().getSelectedItem();
-        if (selectedTour != null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
-            Parent root = loader.load();
-            DayTourBookingController controller = loader.getController();
-            controller.initData(selectedTour);
-
-            Stage stage = new Stage();
-
-            stage.setTitle("Book tour");
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } else {
-            //show error message to the user maybe?
-            System.out.println("No tour selected.");
-        }
-    }
-
 
     // Getters and setters
     private List<DayTourBooking> getBookings() {

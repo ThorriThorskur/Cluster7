@@ -2,6 +2,7 @@ package DayTours;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class DayTourBooking {
     private Tour tour;
@@ -9,6 +10,7 @@ public class DayTourBooking {
     private LocalDate date;
     private LocalTime time;
     private String pickUpLocation;
+    private UUID id;
 
     public Tour getTour() {
         return tour;
@@ -50,7 +52,8 @@ public class DayTourBooking {
         this.pickUpLocation = pickUpLocation;
     }
 
-    public DayTourBooking(Tour tour, User user, LocalDate date, LocalTime time, String pickUpLocation) {
+    public DayTourBooking(UUID uuid, Tour tour, User user, LocalDate date, LocalTime time, String pickUpLocation) {
+        this.id = uuid;
         this.tour = tour;
         this.user = user;
         this.date = date;

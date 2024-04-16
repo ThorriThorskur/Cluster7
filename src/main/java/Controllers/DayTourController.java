@@ -10,10 +10,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -329,6 +335,30 @@ public class DayTourController implements InterfaceServiceController {
 
         return categories;
     }
+
+
+
+    @FXML
+    private void handleBookTour() throws IOException, ClassNotFoundException {
+        Tour selectedTour = tableTours.getSelectionModel().getSelectedItem();
+        if (selectedTour != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
+            Parent root = loader.load();
+            DayTourBookingController controller = loader.getController();
+            controller.initData(selectedTour);
+
+            Stage stage = new Stage();
+
+            stage.setTitle("Book tour");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } else {
+            //show error message to the user maybe?
+            System.out.println("No tour selected.");
+        }
+    }
+
 
     // Getters and setters
     private List<DayTourBooking> getBookings() {

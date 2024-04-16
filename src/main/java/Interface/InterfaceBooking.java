@@ -3,6 +3,11 @@ package Interface;
 import java.util.UUID;
 
 public abstract class InterfaceBooking {
+    // Abstract methods to be implemented by all bookings
+    public abstract String getType();
+    public abstract String getDetails();
+    public abstract double getPrice();
+
     public enum ServiceType {
         Flight, Hotel, Tour
     }

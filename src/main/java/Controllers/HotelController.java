@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HotelController implements InterfaceServiceController {
 
@@ -40,6 +41,9 @@ public class HotelController implements InterfaceServiceController {
     private DatePicker dpCheckIn;
     @FXML
     private DatePicker dpCheckOut;
+
+    @FXML
+    private TextField txtMaxPrice;
 
 
     private HotelDB hotelDB;
@@ -99,26 +103,41 @@ public class HotelController implements InterfaceServiceController {
     }
 
     public List<Hotel> search(String query) {
-        // Assuming the HotelDB has a method to search hotels by name or location
         return hotelDB.searchHotels(query);
     }
 
 
     @FXML
     private void onHotelSearchButtonClicked() {
-        Hotel selectedHotel = cmbHotels.getValue(); // Assuming hotelSearchField is where the hotel name is entered
-        LocalDate checkInDate = dpCheckIn.getValue(); // Get selected check-in date from DatePicker
-        LocalDate checkOutDate = dpCheckOut.getValue(); // Get selected check-out date from DatePicker
+        System.out.println("Please select your dates");
+        Hotel selectedHotel = cmbHotels.getValue();
+        LocalDate checkInDate = dpCheckIn.getValue();
+        LocalDate checkOutDate = dpCheckOut.getValue();
 
-        if (selectedHotel != null && checkInDate != null && checkOutDate != null && checkInDate.isBefore(checkOutDate)) {
+        final double[] maxPricePerNight = {Double.POSITIVE_INFINITY};
+
+        String maxPriceText = txtMaxPrice.getText();
+        if (!maxPriceText.isEmpty()) {
+            try {
+                maxPricePerNight[0] = Double.parseDouble(maxPriceText);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input for max price per night");
+                return;
+            }
+        }
+
+        if (selectedHotel != null && checkInDate != null && checkOutDate != null) {
             String hotelName = selectedHotel.getName();
             Location hotelLocation = selectedHotel.getLocation();
 
             List<Room> rooms = roomDB.searchRoomsByHotelAndDates(hotelName, checkInDate, checkOutDate);
+
+            rooms = rooms.stream()
+                    .filter(room -> room.getPricePerNight() <= maxPricePerNight[0])
+                    .collect(Collectors.toList());
+
             System.out.println(rooms);
             tableRooms.setItems(FXCollections.observableArrayList(rooms));
-        } else {
-            System.out.println("Please select your dates");
         }
     }
 

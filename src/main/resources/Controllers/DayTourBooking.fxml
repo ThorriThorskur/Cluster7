@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="297.0" style="-fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.BookDayTourController">
+    <children>
+        <BorderPane layoutY="94.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="293.0">
+            <top>
+                <VBox />
+            </top>
+            <center>
+                <GridPane alignment="CENTER" prefHeight="170.0" prefWidth="293.0">
+                    <Label text="Number of Tickets:" GridPane.rowIndex="1" />
+                    <Spinner fx:id="fxTicketsSpinner" initialValue="1" max="10" min="1" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+                    <Label text="Total Price:" GridPane.rowIndex="3" />
+                    <Label fx:id="fxTotalPrice" text="0 kr" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+                    <Label text="Customer Name:" GridPane.rowIndex="4" />
+                    <TextField fx:id="fxName" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      
+                    <Label text="Customer Email:" GridPane.rowIndex="5" />
+                    <TextField fx:id="fxEmail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      
+                    <Label text="Customer Phone:" GridPane.rowIndex="6" />
+                    <TextField fx:id="fxPhoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+            </center>
+            <bottom>
+                <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+                    <Button onAction="#handleCancel" text="Cancel" />
+                    <Label fx:id="fxErrorMessage" text="//Error message" />
+                    <Button onAction="#handleConfirmBooking" text="Confirm Booking" />
+                </HBox>
+            </bottom>
+        </BorderPane>
+              <Label layoutX="68.0" layoutY="14.0" style="-fx-font-size: 24px;" text="Book Day Tour" />
+      <Label layoutX="91.0" layoutY="49.0" text="//Tour name + date?" />
+    </children>
+</AnchorPane>

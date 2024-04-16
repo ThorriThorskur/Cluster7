@@ -10,10 +10,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -56,6 +62,18 @@ public class DayTourController implements InterfaceServiceController {
     private List<DayTourBooking> bookings;
 
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/Databases/tours.db";
+
+    @FXML
+    private void handleBookTour() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/DayTourBooking.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Book Day Tour");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 
     public DayTourController() {
 

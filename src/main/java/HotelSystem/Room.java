@@ -1,6 +1,5 @@
 package HotelSystem;
 
-import java.util.List;
 
 public class Room {
     private int roomNumber;
@@ -55,16 +54,6 @@ public class Room {
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
-    public String getRoomNumberAsString() {
-        return String.valueOf(roomNumber); // Convert integer or other type to String
-    }
 
-    public String getRoomTypeAsString() {
-        return type.toString(); // Assuming type is an enum or similar
-    }
-
-    public String getAvailabilityAsString() {
-        return isAvailable ? "Available" : "Unavailable"; // Convert boolean to String
-    }
 }
 

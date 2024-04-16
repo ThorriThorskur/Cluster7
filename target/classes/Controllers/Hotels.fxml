@@ -51,10 +51,10 @@
       <!-- Hotel Table -->
       <TableView fx:id="tableRooms">
          <columns>
-            <TableColumn fx:id="columnRoomNumber" minWidth="88.99996644258499" prefWidth="158.60000306367874" text="Room number" />
-            <TableColumn fx:id="columnRoomType" minWidth="100.0" prefWidth="193.3999786376953" text="Room type" />
-            <TableColumn fx:id="columnAvailability" minWidth="90.0" prefWidth="214.5999755859375" text="Availability" />
-            <TableColumn fx:id="columnPricePerNight" minWidth="85.0" prefWidth="231.800048828125" text="Price" />
+            <TableColumn fx:id="columnRoomNumber" minWidth="88.99996644258499" prefWidth="105.19997864961624" text="Room number" />
+            <TableColumn fx:id="columnRoomType" minWidth="100.0" prefWidth="207.8000030517578" text="Room type" />
+            <TableColumn fx:id="columnAvailability" minWidth="90.0" prefWidth="182.20001220703125" text="Availability" />
+            <TableColumn fx:id="columnPricePerNight" minWidth="85.0" prefWidth="308.199951171875" text="Price per night" />
          </columns>
       </TableView>
 

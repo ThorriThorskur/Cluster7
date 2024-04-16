@@ -1,16 +1,12 @@
 package HotelSystem;
 
 import Interface.InterfaceBooking;
-import Interface.InterfaceService;
-
 import java.time.LocalDate;
-import java.util.Date;
 public class Reservation extends InterfaceBooking {
     private int reservationId;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private double totalCost;
-    private int guestId;
     private int roomId;
 
     // Constructor
@@ -39,12 +35,6 @@ public class Reservation extends InterfaceBooking {
         return totalCost;
     }
 
-    public double calculateTotalCost() {
-        // Placeholder for total cost calculation logic
-        // This needs to be implemented based on specific rules
-        return totalCost;
-    }
-
     public int getReservationID() {
         return reservationId;
     }
@@ -57,24 +47,12 @@ public class Reservation extends InterfaceBooking {
         return checkInDate;
     }
 
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
     public int getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
     public LocalDate getCheckOutDate() {
         return checkOutDate;
-    }
-
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
     }
 
     public double getTotalCost() {

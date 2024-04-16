@@ -45,14 +45,10 @@ public class HotelController implements InterfaceServiceController {
 
     private HotelDB hotelDB;
     private RoomDB roomDB;
+
     public HotelController() {
         this.hotelDB = new HotelDB();
         this.roomDB = new RoomDB();
-    }
-
-    public HotelController(HotelDB hotelDB, RoomDB roomDB, ReservationDB reservationDB) {
-        this.hotelDB = hotelDB;
-        this.roomDB = roomDB;
     }
 
     public void initialize() {
@@ -81,7 +77,8 @@ public class HotelController implements InterfaceServiceController {
         ObservableList<Hotel> hotelList = FXCollections.observableArrayList(allHotels);
         cmbHotels.setItems(hotelList);
     }
-    public List<String> getHotelLocations(){
+
+    public List<String> getHotelLocations() {
         return hotelDB.getUniqueHotelLocations();
     }
 
@@ -174,49 +171,5 @@ public class HotelController implements InterfaceServiceController {
         if (service instanceof Hotel) {
             Hotel hotel = (Hotel) service;
         }
-    }
-
-    // Additional methods specific to hotels
-
-    public Hotel getHotelDetails(String hotelId) {
-        return hotelDB.select(hotelId);
-    }
-
-    public List<Hotel> listHotels() {
-        return hotelDB.selectAll();
-    }
-
-    /**
-     public void bookRoom(int guestId, int roomId, Date checkInDate, Date checkOutDate) {
-     Reservation newReservation = new Reservation(guestId, roomId, checkInDate, checkOutDate);
-     reservationDB.insert(newReservation);
-     }
-     */
-
-    /**
-    public List<Room> listRoomsByHotel() {
-        return roomDB.listRoomsByHotel();
-    }*/
-
-    public void updateRoom(Room room) {
-        roomDB.update(room);
-    }
-
-    public void deleteRoom(int roomId) {
-        roomDB.delete(roomId);
-    }
-
-    /**
-     public void createReservation(int guestId, int roomId, Date checkInDate, Date checkOutDate) {
-     Reservation reservation = new Reservation(guestId, roomId, checkInDate, checkOutDate);
-     double totalCost = calculateTotalCost(checkInDate, checkOutDate);
-     reservation.setTotalCost(totalCost);
-     reservationDB.insert(reservation);
-     }*/
-
-    private double calculateTotalCost(Date checkInDate, Date checkOutDate) {
-        long diff = checkOutDate.getTime() - checkInDate.getTime();
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-        return diffDays * 100.0; // Simplified cost calculation
     }
 }

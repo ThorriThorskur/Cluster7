@@ -86,4 +86,18 @@ public class DayTourBooking extends InterfaceBooking {
         this.id = id;
     }
 
+    @Override
+    public String getType() {
+        return "Tour";
+    }
+
+    @Override
+    public String getDetails() {
+        return getTour().getName()+ " - " + getTour().getDescription();
+    }
+
+    @Override
+    public double getPrice() {
+        return getTour().getPrice();
+    }
 }

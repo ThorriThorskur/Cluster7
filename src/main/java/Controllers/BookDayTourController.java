@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class BookDayTourController {
@@ -38,27 +39,57 @@ public class BookDayTourController {
     private Label fxErrorMessage;
     private DayTourController dayTourController;
 
+    private ArrayList<DayTourBooking> bookings = new ArrayList<>();
 
+    private void handleConfirmPurchase(){
+        String sqlBooking = "INSERT INTO Booking (bookingID, tourID, userID, pickUpLocation) VALUES (?, ?, ?, ?)";
+        for (DayTourBooking book : bookings)
+        {
+            try (Connection conn = DriverManager.getConnection(DB_URL);
+                 PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);) {
+
+                // Insert booking
+                pstmtBooking.setString(1, book.getId().toString());
+                pstmtBooking.setString(2, selectedTour.getTourId().toString());
+                pstmtBooking.setString(3, book.getId().toString());
+                pstmtBooking.setString(4, selectedTour.getLocationName());
+                pstmtBooking.executeUpdate();
+
+
+                System.out.println("Booking created with ID: " + book.getId());
+
+            } catch (SQLException e) {
+                System.out.println("Error occurred while adding the booking: " + e.getMessage());
+            }
+        }
+
+    }
 
     @FXML
     private void handleConfirmBooking() throws ClassNotFoundException, SQLException {
         User currentUser = new User(UUID.randomUUID(), fxTourName.getText(), fxTourEmail.getText());
         DayTourBooking bookingTour = new DayTourBooking(UUID.randomUUID(), selectedTour, currentUser, LocalDate.now(), LocalTime.now(), selectedTour.getLocationName());
+        bookings.add(bookingTour);
+
         if (selectedTour.getCapacity() > 0) {
             insertUser(currentUser);
+/*
             String sqlBooking = "INSERT INTO Booking (bookingID, tourID, userID, pickUpLocation) VALUES (?, ?, ?, ?)";
+*/
             String sqlTour = "UPDATE Tours SET capacity = ?, availability = ? WHERE tourID = ?";
 
             try (Connection conn = DriverManager.getConnection(DB_URL);
+/*
                  PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);
+*/
                  PreparedStatement pstmtTour = conn.prepareStatement(sqlTour)) {
 
-                // Insert booking
+           /*     // Insert booking
                 pstmtBooking.setString(1, bookingTour.getId().toString());
                 pstmtBooking.setString(2, selectedTour.getTourId().toString());
                 pstmtBooking.setString(3, currentUser.getId().toString());
                 pstmtBooking.setString(4, selectedTour.getLocationName());
-                pstmtBooking.executeUpdate();
+                pstmtBooking.executeUpdate();*/
 
                 // Update tour capacity and availability
                 int newCapacity = selectedTour.getCapacity() - 1;
@@ -69,8 +100,10 @@ public class BookDayTourController {
                 pstmtTour.executeUpdate();
 
                 selectedTour.setCapacity(newCapacity);
-
+                handleConfirmPurchase();
+/*
                 System.out.println("Booking created with ID: " + bookingTour.getId());
+*/
 
             } catch (SQLException e) {
                 System.out.println("Error occurred while adding the booking: " + e.getMessage());

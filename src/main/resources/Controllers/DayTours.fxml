@@ -67,6 +67,8 @@
             <TableColumn fx:id="fxcolumnWheelchair" prefWidth="110.0" text="WheelchairAccessable" />
             <TableColumn fx:id="fxcolumnAvailability" prefWidth="81.0" text="Available" />
             <TableColumn fx:id="fxcolumnCapacity" prefWidth="81.0" text="Capacity" />
+            <TableColumn fx:id="fxcoloumnID" visible="false" />
+
          </columns>
       </TableView>
 

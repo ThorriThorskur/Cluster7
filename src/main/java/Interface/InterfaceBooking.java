@@ -9,7 +9,7 @@ public abstract class InterfaceBooking {
     public abstract double getPrice();
 
     public enum ServiceType {
-        Flight, Hotel, DayTrip
+        Flight, Hotel, Tour
     }
 
     private UUID bookingId;

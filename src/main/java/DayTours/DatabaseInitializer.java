@@ -43,7 +43,6 @@ public class DatabaseInitializer {
     }
 
 
-
     public static void initializeDatabase() {
         try {
             // Explicitly load the SQLite JDBC driver

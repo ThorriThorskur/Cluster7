@@ -136,7 +136,7 @@ public class ReservationDB {
 
     public static Reservation createReservation(Room selectedRoom, LocalDate checkInDate, LocalDate checkOutDate) {
         double pricePerNight = selectedRoom.getPricePerNight();
-        long numOfDays = 2;//ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        long numOfDays = checkOutDate.toEpochDay() - checkInDate.toEpochDay();
         double totalCost = numOfDays * pricePerNight;
 
         Reservation newReservation = new Reservation(0, selectedRoom.getRoomId(), checkInDate, checkOutDate, totalCost);

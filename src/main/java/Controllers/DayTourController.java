@@ -53,7 +53,7 @@ public class DayTourController implements InterfaceServiceController {
     @FXML
     private TableColumn<Tour, Integer> fxcolumnCapacity;
     @FXML
-    private TableColumn<Tour, UUID> fxcoloumnID;
+    private TableColumn<Tour, UUID> fxcolomnID;
 
     private List<DayTourBooking> bookings;
 
@@ -95,7 +95,7 @@ public class DayTourController implements InterfaceServiceController {
         fxcolumnWheelchair.setCellValueFactory(new PropertyValueFactory<>("wheelchairAccessible"));
         fxcolumnAvailability.setCellValueFactory(new PropertyValueFactory<>("availability"));
         fxcolumnCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        fxcoloumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        fxcolomnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 
         ObservableList<String> categoryObs = FXCollections.observableArrayList(getCategories());

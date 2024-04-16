@@ -2,24 +2,25 @@ package HotelSystem;
 
 import Interface.InterfaceService;
 
+import java.time.LocalDate;
 import java.util.Date;
 public class Reservation {
     private int reservationId;
-    private Date checkInDate;
-    private Date checkOutDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private double totalCost;
     private int guestId;
     private int roomId;
 
     // Constructor
-    public Reservation(int reservationId,int guestId, int roomId, Date checkInDate, Date checkOutDate) {
+    public Reservation(int reservationId, int roomId, LocalDate checkInDate, LocalDate checkOutDate, Double totalCost) {
         this.reservationId = reservationId;
-        this.guestId = guestId;
         this.roomId = roomId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.totalCost = 0.0;
+        this.totalCost = totalCost;
     }
+
     public double calculateTotalCost() {
         // Placeholder for total cost calculation logic
         // This needs to be implemented based on specific rules
@@ -34,20 +35,12 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public Date getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(Date checkInDate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
-    }
-
-    public int getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(int guestId) {
-        this.guestId = guestId;
     }
 
     public int getRoomId() {
@@ -58,11 +51,11 @@ public class Reservation {
         this.roomId = roomId;
     }
 
-    public Date getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(Date checkOutDate) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 

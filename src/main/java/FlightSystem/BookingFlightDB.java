@@ -36,6 +36,9 @@ public class BookingFlightDB {
         c.close();
     }
 
+    /*
+    These three methods will likely go unused.
+     */
     public ArrayList<BookingFlight> select(BookingFlight b) {
         return null;
     }
@@ -48,6 +51,9 @@ public class BookingFlightDB {
         return;
     }
 
+    /*
+    Responsible for updating the seat on the flight and the flight booking database.
+     */
     public void insert(BookingFlight b) {
         flightDB.updateSeatToTaken(b.getBookedFlight(), b.getSeat());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

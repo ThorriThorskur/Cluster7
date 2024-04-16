@@ -64,7 +64,7 @@ public class FlightController implements InterfaceServiceController {
     private TableColumn<Flight, String> columnPrice;
 
     @FXML
-    private void handleBookFlight() throws IOException {
+    private void handleBookFlight() throws IOException, ClassNotFoundException {
         Flight selectedFlight = tableFlights.getSelectionModel().getSelectedItem();
         if (selectedFlight != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/FlightBooking.fxml"));
@@ -73,9 +73,6 @@ public class FlightController implements InterfaceServiceController {
             controller.initData(selectedFlight);
 
             Stage stage = new Stage();
-
-            BookFlightController controller = loader.getController();
-            controller.setFlight(tableFlights.getSelectionModel().getSelectedItem());
 
             stage.setTitle("Book Flight");
             stage.initStyle(StageStyle.UNDECORATED);

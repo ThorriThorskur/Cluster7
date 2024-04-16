@@ -8,13 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class BookDayTourController {
@@ -39,79 +37,58 @@ public class BookDayTourController {
     private Label fxErrorMessage;
     private DayTourController dayTourController;
 
-    private ArrayList<DayTourBooking> bookings = new ArrayList<>();
 
-    private void handleConfirmPurchase(){
+    private void handleConfirmPurchase(DayTourBooking book){
         String sqlBooking = "INSERT INTO Booking (bookingID, tourID, userID, pickUpLocation) VALUES (?, ?, ?, ?)";
-        for (DayTourBooking book : bookings)
-        {
-            try (Connection conn = DriverManager.getConnection(DB_URL);
-                 PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);) {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);) {
 
-                // Insert booking
-                pstmtBooking.setString(1, book.getId().toString());
-                pstmtBooking.setString(2, selectedTour.getTourId().toString());
-                pstmtBooking.setString(3, book.getId().toString());
-                pstmtBooking.setString(4, selectedTour.getLocationName());
-                pstmtBooking.executeUpdate();
+            pstmtBooking.setString(1, book.getId().toString());
+            pstmtBooking.setString(2, selectedTour.getTourId().toString());
+            pstmtBooking.setString(3, book.getId().toString());
+            pstmtBooking.setString(4, selectedTour.getLocationName());
+            pstmtBooking.executeUpdate();
 
 
-                System.out.println("Booking created with ID: " + book.getId());
+            System.out.println("Booking created with ID: " + book.getId());
 
-            } catch (SQLException e) {
-                System.out.println("Error occurred while adding the booking: " + e.getMessage());
-            }
+        } catch (SQLException e) {
+            System.out.println("Error occurred while adding the booking: " + e.getMessage());
         }
-
     }
 
     @FXML
     private void handleConfirmBooking() throws ClassNotFoundException, SQLException {
         User currentUser = new User(UUID.randomUUID(), fxTourName.getText(), fxTourEmail.getText());
         DayTourBooking bookingTour = new DayTourBooking(UUID.randomUUID(), selectedTour, currentUser, LocalDate.now(), LocalTime.now(), selectedTour.getLocationName());
-        bookings.add(bookingTour);
-
         if (selectedTour.getCapacity() > 0) {
-            insertUser(currentUser);
-/*
-            String sqlBooking = "INSERT INTO Booking (bookingID, tourID, userID, pickUpLocation) VALUES (?, ?, ?, ?)";
-*/
-            String sqlTour = "UPDATE Tours SET capacity = ?, availability = ? WHERE tourID = ?";
+            if (!fxTourName.getText().isBlank() && !fxPhoneNumber.getText().isBlank() && !fxPhoneNumber.getText().matches(".*[a-zA-Z]+.*") && fxTourEmail.getText().contains("@")) {
+                insertUser(currentUser);
 
-            try (Connection conn = DriverManager.getConnection(DB_URL);
-/*
-                 PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);
-*/
-                 PreparedStatement pstmtTour = conn.prepareStatement(sqlTour)) {
+                String sqlTour = "UPDATE Tours SET capacity = ?, availability = ? WHERE tourID = ?";
 
-           /*     // Insert booking
-                pstmtBooking.setString(1, bookingTour.getId().toString());
-                pstmtBooking.setString(2, selectedTour.getTourId().toString());
-                pstmtBooking.setString(3, currentUser.getId().toString());
-                pstmtBooking.setString(4, selectedTour.getLocationName());
-                pstmtBooking.executeUpdate();*/
+                try (Connection conn = DriverManager.getConnection(DB_URL);
+                     PreparedStatement pstmtTour = conn.prepareStatement(sqlTour)) {
 
-                // Update tour capacity and availability
-                int newCapacity = selectedTour.getCapacity() - 1;
-                boolean newAvailability = newCapacity > 0;
-                pstmtTour.setInt(1, newCapacity);
-                pstmtTour.setBoolean(2, newAvailability);
-                pstmtTour.setString(3, selectedTour.getTourId().toString());
-                pstmtTour.executeUpdate();
+                    int newCapacity = selectedTour.getCapacity() - 1;
+                    boolean newAvailability = newCapacity > 0;
+                    pstmtTour.setInt(1, newCapacity);
+                    pstmtTour.setBoolean(2, newAvailability);
+                    pstmtTour.setString(3, selectedTour.getTourId().toString());
+                    pstmtTour.executeUpdate();
+                    selectedTour.setCapacity(newCapacity);
 
-                selectedTour.setCapacity(newCapacity);
-                handleConfirmPurchase();
-/*
-                System.out.println("Booking created with ID: " + bookingTour.getId());
-*/
+                } catch (SQLException e) {
+                    System.out.println("Error occurred while adding the booking: " + e.getMessage());
+                }
 
-            } catch (SQLException e) {
-                System.out.println("Error occurred while adding the booking: " + e.getMessage());
+                Cart.getInstance().addBooking(bookingTour);
+                initData(selectedTour, dayTourController);
+                clearFields();
             }
-
-            Cart.getInstance().addBooking(bookingTour);
-            initData(selectedTour, dayTourController);
-            clearFields();
+            else {
+                fxErrorMessage.setText("Sorry, Please enter the correct details.");
+            }
         }
         else {
             fxErrorMessage.setText("Sorry, this tour is fully booked.");
@@ -127,7 +104,7 @@ public class BookDayTourController {
     public void initData(Tour tour, DayTourController dayTourController) throws ClassNotFoundException, SQLException {
         this.selectedTour = tour;
         fxtitle.setText(selectedTour.getName() + " " + selectedTour.getDateOnly());
-        fxPrice.setText(String.valueOf(selectedTour.getPrice()));
+        fxPrice.setText(String.valueOf(selectedTour.getPrice()) + " kr.");
         this.dayTourController =dayTourController;
         ActionEvent event = new ActionEvent();
         dayTourController.searchClick(event);

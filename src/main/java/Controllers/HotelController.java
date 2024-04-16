@@ -106,7 +106,6 @@ public class HotelController implements InterfaceServiceController {
 
     @FXML
     private void onHotelSearchButtonClicked() {
-        System.out.println("Please select your dates");
         Hotel selectedHotel = cmbHotels.getValue();
         LocalDate checkInDate = dpCheckIn.getValue();
         LocalDate checkOutDate = dpCheckOut.getValue();
@@ -118,12 +117,11 @@ public class HotelController implements InterfaceServiceController {
             try {
                 maxPricePerNight[0] = Double.parseDouble(maxPriceText);
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input for max price per night");
                 return;
             }
         }
 
-        if (selectedHotel != null && checkInDate != null && checkOutDate != null) {
+        if (selectedHotel != null && checkInDate != null && checkOutDate != null && checkInDate.isBefore(checkOutDate)) {
             String hotelName = selectedHotel.getName();
             Location hotelLocation = selectedHotel.getLocation();
 
@@ -131,6 +129,7 @@ public class HotelController implements InterfaceServiceController {
 
             rooms = rooms.stream()
                     .filter(room -> room.getPricePerNight() <= maxPricePerNight[0])
+                    .filter(room -> isRoomAvailableForDates(room, checkInDate, checkOutDate)) // Filter out unavailable rooms
                     .collect(Collectors.toList());
 
             System.out.println(rooms);
@@ -145,17 +144,24 @@ public class HotelController implements InterfaceServiceController {
         LocalDate checkInDate = dpCheckIn.getValue();
         LocalDate checkOutDate = dpCheckOut.getValue();
 
-        if (selectedRoom != null && checkInDate != null && checkOutDate != null) {
+        if (selectedRoom != null && checkInDate != null && checkOutDate != null && checkInDate.isBefore(checkOutDate)) {
             Reservation reservation = ReservationDB.createReservation(selectedRoom, checkInDate, checkOutDate);
             Cart.getInstance().addBooking(reservation);
-            System.out.println("Booked hotel");
         } else {
-            // Handle case when room or dates are not selected
-            System.out.println("Please select a room and enter check-in and check-out dates.");
         }
     }
 
-
+    private boolean isRoomAvailableForDates(Room room, LocalDate checkInDate, LocalDate checkOutDate) {
+        List<Reservation> existingReservations = ReservationDB.getReservationsByRoom(room);
+        for (Reservation reservation : existingReservations) {
+            LocalDate reservationCheckInDate = reservation.getCheckInDate();
+            LocalDate reservationCheckOutDate = reservation.getCheckOutDate();
+            if (!checkOutDate.isBefore(reservationCheckInDate) && !checkInDate.isAfter(reservationCheckOutDate)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     public void addService(InterfaceService service) {

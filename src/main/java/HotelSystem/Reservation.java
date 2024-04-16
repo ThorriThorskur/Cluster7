@@ -23,6 +23,22 @@ public class Reservation extends InterfaceBooking {
         this.totalCost = totalCost;
     }
 
+    @Override
+    public String getType() {
+        return "Hotel";
+    }
+
+    @Override
+    public String getDetails() {
+        return "Reservation ID: " + reservationId + ", Room ID: " + roomId +
+                ", Check-in: " + checkInDate + ", Check-out: " + checkOutDate;
+    }
+
+    @Override
+    public double getPrice() {
+        return totalCost;
+    }
+
     public double calculateTotalCost() {
         // Placeholder for total cost calculation logic
         // This needs to be implemented based on specific rules

@@ -10,4 +10,5 @@ module team.t.hugb {
     exports Controllers;
 
     opens DayTours to javafx.base;
+    opens FlightSystem to javafx.base;
 }

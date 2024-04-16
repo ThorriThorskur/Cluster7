@@ -37,7 +37,13 @@ public class CartController {
         });
     }
     public void handleOrder(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Booking.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controllers/Booking.fxml"));
+        Parent root = loader.load();
+        BookingController bookingController = loader.getController();
+
+        //pass cart objects to the booking controller:
+        bookingController.setBookingItems(Cart.getInstance().getBookings());
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("TravelApp");

@@ -38,6 +38,21 @@ public class BookingFlight extends InterfaceBooking {
         return getBookedFlight().getName() + " - " + getFinalPrice() + " kr";
     }
 
+    @Override
+    public String getType() {
+        return "Flight";
+    }
+
+    @Override
+    public String getDetails() {
+        return "Flight from " + bookedFlight.getLocationProperty() + " to " + bookedFlight.getDestinationProperty();
+    }
+
+    @Override
+    public double getPrice() {
+        return finalPrice;
+    }
+
     // Getters and setters
     public Flight getBookedFlight() {
         return this.bookedFlight;

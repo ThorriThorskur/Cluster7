@@ -1,8 +1,9 @@
 package FlightSystem;
 
+import Interface.InterfaceBooking;
 import java.util.UUID;
 
-public class BookingFlight {
+public class BookingFlight extends InterfaceBooking {
     private Flight bookedFlight;
     private Seat seat;
     private Passenger passenger;
@@ -14,6 +15,7 @@ public class BookingFlight {
     private UUID id;
 
     public BookingFlight(Flight bookedFlight, Seat seat, Passenger passenger, boolean isPaidFor, int bags) {
+        super(InterfaceBooking.ServiceType.Flight);
         this.bookedFlight = bookedFlight;
         this.seat = seat;
         this.passenger = passenger;
@@ -29,6 +31,11 @@ public class BookingFlight {
         }
         this.finalPrice = bookedFlight.getStartingPrice() + bags*KR_PER_BAG;
         this.id = UUID.randomUUID();
+    }
+
+    @Override
+    public String toString() {
+        return getBookedFlight().getName() + " - " + getFinalPrice() + " kr";
     }
 
     // Getters and setters

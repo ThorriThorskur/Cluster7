@@ -1,5 +1,6 @@
 package Controllers;
 
+import EngineStuff.Cart;
 import FlightSystem.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -9,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class BookFlightController {
     @FXML
@@ -96,6 +96,9 @@ public class BookFlightController {
             BookingFlight booking = new BookingFlight(selectedFlight, seat, passenger, false, bags);
             selectedFlight.getSeat(seat.getSeatName()).setBooked(true);
             bookingFlightDB.insert(booking);
+
+            Cart.getInstance().addBooking(booking);
+
             initData(selectedFlight);
             clearFields();
 

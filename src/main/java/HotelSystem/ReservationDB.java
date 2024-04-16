@@ -150,4 +150,30 @@ public class ReservationDB {
             return null;
         }
     }
+
+
+    public static List<Reservation> getReservationsByRoom(Room room) {
+        List<Reservation> reservations = new ArrayList<>();
+        String sql = "SELECT * FROM Reservations WHERE roomId = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, room.getRoomId());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int reservationId = resultSet.getInt("reservationId");
+                    LocalDate checkInDate = resultSet.getDate("checkInDate").toLocalDate();
+                    LocalDate checkOutDate = resultSet.getDate("checkOutDate").toLocalDate();
+                    double totalCost = resultSet.getDouble("totalCost");
+
+                    Reservation reservation = new Reservation(reservationId, room.getRoomId(), checkInDate, checkOutDate, totalCost);
+                    reservations.add(reservation);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving reservations " + e.getMessage());
+        }
+        return reservations;
+    }
+
 }

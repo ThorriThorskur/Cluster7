@@ -11,4 +11,5 @@ module team.t.hugb {
 
     opens DayTours to javafx.base;
     opens FlightSystem to javafx.base;
+    opens HotelSystem to javafx.base;
 }

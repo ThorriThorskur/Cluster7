@@ -2,8 +2,6 @@ package HotelSystem;
 
 import Interface.InterfaceService;
 import EngineStuff.Location;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,18 +22,6 @@ public class Hotel extends InterfaceService {
         this.hotelId = UUID.randomUUID();
     }
 
-    public void createReservation() {}
-    public void updateReservation() {}
-    public void checkRoomAvailability(String checkInDate, String checkOutDate) {}
-    public List<Room> getRooms() {
-        if (rooms == null) {
-            rooms = new ArrayList<>(); // Initialize rooms if null
-            // Alternatively, you could load the rooms from a database here,
-            // but then you would need to handle SQLExceptions.
-        }
-        return new ArrayList<>(rooms); // Return a copy of the rooms list to avoid external modifications.
-    }
-
     public String getName() {
         return name;
     }
@@ -53,33 +39,11 @@ public class Hotel extends InterfaceService {
         this.location = new Location(0,0,locationString);
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
 
     public UUID getId() {
         return hotelId;
     }
 
-    public void setHotelId(UUID hotelId) {
-        this.hotelId = hotelId;
-    }
     @Override
     public String toString() {
         return name + " | " + rating + " Rating";

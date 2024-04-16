@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class HotelController implements InterfaceServiceController {
 
@@ -109,6 +110,8 @@ public class HotelController implements InterfaceServiceController {
         return hotelDB.searchHotels(query);
     }
 
+    @FXML
+    private TextField txtMaxPrice;
 
     @FXML
     private void onHotelSearchButtonClicked() {
@@ -117,11 +120,32 @@ public class HotelController implements InterfaceServiceController {
         LocalDate checkInDate = dpCheckIn.getValue(); // Get selected check-in date from DatePicker
         LocalDate checkOutDate = dpCheckOut.getValue(); // Get selected check-out date from DatePicker
 
+        // Initialize max price per night as Double.POSITIVE_INFINITY (i.e., no maximum price filter)
+        final double[] maxPricePerNight = {Double.POSITIVE_INFINITY};
+
+        // Parse the max price per night from the text field if it's not empty
+        String maxPriceText = txtMaxPrice.getText();
+        if (!maxPriceText.isEmpty()) {
+            try {
+                maxPricePerNight[0] = Double.parseDouble(maxPriceText);
+            } catch (NumberFormatException e) {
+                // Handle invalid input (non-numeric input)
+                System.err.println("Invalid input for max price per night");
+                return; // Exit the method early
+            }
+        }
+
         if (selectedHotel != null && checkInDate != null && checkOutDate != null) {
             String hotelName = selectedHotel.getName();
             Location hotelLocation = selectedHotel.getLocation();
 
             List<Room> rooms = roomDB.searchRoomsByHotelAndDates(hotelName, checkInDate, checkOutDate);
+
+            // Filter rooms based on max price per night
+            rooms = rooms.stream()
+                    .filter(room -> room.getPricePerNight() <= maxPricePerNight[0])
+                    .collect(Collectors.toList());
+
             System.out.println(rooms);
             tableRooms.setItems(FXCollections.observableArrayList(rooms));
         } else {

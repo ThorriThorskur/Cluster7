@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class BookFlightController {
     private Label fxTotalPrice;
     @FXML
     private Label fxErrorMessage;
+    @FXML
+    private ImageView seatLayoutImageView;
 
     private Flight selectedFlight;
 
@@ -41,11 +45,11 @@ public class BookFlightController {
 
     private final int KR_PER_BAG = 5000;
 
-   @FXML
+    @FXML
     public void handleCancel(ActionEvent actionEvent) {
-       Node source = (Node) actionEvent.getSource();
-       Stage stage = (Stage) source.getScene().getWindow();
-       stage.close();
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     public void initData(Flight flight) throws ClassNotFoundException {
@@ -56,22 +60,24 @@ public class BookFlightController {
         bookingFlightDB = new BookingFlightDB();
         fxTotalPrice.setText(String.valueOf(selectedFlight.getStartingPrice() ));
         createPriceBinding();
+        Image seatLayoutImage = new Image(getClass().getResourceAsStream("/Images/img.png"));
+        seatLayoutImageView.setImage(seatLayoutImage);
     }
 
     private void createPriceBinding() {
-       fxBagsSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-           int current = selectedFlight.getStartingPrice();
-           fxTotalPrice.setText(String.valueOf(current + (KR_PER_BAG*newValue)));
-       });
+        fxBagsSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            int current = selectedFlight.getStartingPrice();
+            fxTotalPrice.setText(String.valueOf(current + (KR_PER_BAG*newValue)));
+        });
     }
 
     private void populateSeatChoiceBox(ArrayList<Seat> seats) {
-       ArrayList<Seat> availableSeats = new ArrayList<>();
-       for (Seat seat : seats) {
-           if (!seat.getBooked()){
-               availableSeats.add(seat);
-           }
-       }
+        ArrayList<Seat> availableSeats = new ArrayList<>();
+        for (Seat seat : seats) {
+            if (!seat.getBooked()){
+                availableSeats.add(seat);
+            }
+        }
         fxSeatChoice.setItems(FXCollections.observableArrayList(availableSeats));
     }
 
@@ -103,20 +109,22 @@ public class BookFlightController {
             clearFields();
 
             System.out.println("Booking created with ID: " + booking.getId());
-            setErrorMessage("Booking successful: " + booking.getId());
+            Stage stage = (Stage) fxName.getScene().getWindow();
+            stage.close();
+
         } else {
             setErrorMessage("Please fill all fields correctly.");
         }
     }
 
     private void clearFields(){
-       fxName.clear();
-       fxPassportNumber.clear();
-       fxAddress.clear();
-       fxEmail.clear();
-       fxPhoneNumber.clear();
-       fxBagsSpinner.getValueFactory().setValue(0);
-       fxSeatChoice.getSelectionModel().clearSelection();
+        fxName.clear();
+        fxPassportNumber.clear();
+        fxAddress.clear();
+        fxEmail.clear();
+        fxPhoneNumber.clear();
+        fxBagsSpinner.getValueFactory().setValue(0);
+        fxSeatChoice.getSelectionModel().clearSelection();
     }
 
 

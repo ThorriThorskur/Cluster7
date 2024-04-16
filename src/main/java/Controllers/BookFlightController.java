@@ -1,9 +1,6 @@
 package Controllers;
 
-import FlightSystem.BookingFlight;
-import FlightSystem.Flight;
-import FlightSystem.Passenger;
-import FlightSystem.Seat;
+import FlightSystem.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +23,7 @@ public class BookFlightController {
     @FXML
     private TextField fxPhoneNumber;
     @FXML
-    private ComboBox<String> fxSeatChoice;
+    private ComboBox<Seat> fxSeatChoice;
     @FXML
     private Spinner<Integer> fxBagsSpinner;
     @FXML
@@ -40,6 +37,10 @@ public class BookFlightController {
 
     private Flight selectedFlight;
 
+    private BookingFlightDB bookingFlightDB;
+
+    private final int KR_PER_BAG = 5000;
+
    @FXML
     public void handleCancel(ActionEvent actionEvent) {
        Node source = (Node) actionEvent.getSource();
@@ -47,19 +48,36 @@ public class BookFlightController {
        stage.close();
     }
 
-    public void initData(Flight flight) {
+    public void initData(Flight flight) throws ClassNotFoundException {
         this.selectedFlight = flight;
         fxDeparture.setText(flight.getLocationProperty());
         fxArrival.setText(flight.getDestinationProperty());
         populateSeatChoiceBox(flight.getSeats());
+        bookingFlightDB = new BookingFlightDB();
+        fxTotalPrice.setText(String.valueOf(selectedFlight.getStartingPrice() ));
+        createPriceBinding();
+
+    }
+
+    private void createPriceBinding() {
+       fxBagsSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+           int current = selectedFlight.getStartingPrice();
+           fxTotalPrice.setText(String.valueOf(current + (KR_PER_BAG*newValue)));
+       });
     }
 
     private void populateSeatChoiceBox(ArrayList<Seat> seats) {
-        fxSeatChoice.setItems(FXCollections.observableArrayList(seats.stream().map(Seat::toString).collect(Collectors.toList())));
+       ArrayList<Seat> availableSeats = new ArrayList<>();
+       for (Seat seat : seats) {
+           if (!seat.getBooked()){
+               availableSeats.add(seat);
+           }
+       }
+        fxSeatChoice.setItems(FXCollections.observableArrayList(availableSeats));
     }
 
     @FXML
-    public void handleConfirmBooking() {
+    public void handleConfirmBooking() throws ClassNotFoundException {
         String name = fxName.getText();
         int passportNumber;
         try {
@@ -71,13 +89,14 @@ public class BookFlightController {
         String address = fxAddress.getText();
         String email = fxEmail.getText();
         String phoneNumber = fxPhoneNumber.getText();
-        String seatId = fxSeatChoice.getValue();
+        Seat seat = fxSeatChoice.getValue();
         int bags = fxBagsSpinner.getValue();
 
         if (validateInput(name, passportNumber, address, email, phoneNumber)) {
             Passenger passenger = new Passenger(name, passportNumber, address, email, phoneNumber);
-            Seat seat = new Seat(seatId, false, false);
             BookingFlight booking = new BookingFlight(selectedFlight, seat, passenger, false, bags);
+            selectedFlight.getSeat(seat.getSeatName()).setBooked(true);
+            bookingFlightDB.insert(booking);
 
             System.out.println("Booking created with ID: " + booking.getId());
             setErrorMessage("Booking successful: " + booking.getId());

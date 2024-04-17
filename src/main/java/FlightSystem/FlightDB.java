@@ -256,4 +256,23 @@ public class FlightDB {
             System.out.println("Error in updating seat status");
         }
     }
+
+    public void updateSeatToFree(Flight flight, Seat seat) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String depDate = dateFormat.format(flight.getDepartureDate());
+
+            String query = "Update Flights set Taken=FALSE where FlightID = (?)" +
+                    " AND DepDate = (?) AND Seat = (?)";
+            PreparedStatement prep = c.prepareStatement(query);
+            prep.setString(1,flight.getName());
+            prep.setString(2, depDate);
+            prep.setString(3, seat.getSeatName());
+
+            prep.executeUpdate();
+
+        } catch (Exception e){
+            System.out.println("Error in updating seat status");
+        }
+    }
 }

@@ -48,7 +48,20 @@ public class BookingFlightDB {
     }
 
     public void delete(BookingFlight b) {
-        return;
+        flightDB.updateSeatToFree(b.getBookedFlight(), b.getSeat());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String depDate = dateFormat.format(b.getBookedFlight().getDepartureDate());
+        try{
+            String delete = "DELETE FROM Booking WHERE PassP = (?) AND FlightID = (?)";
+            PreparedStatement prep = c.prepareStatement(delete);
+            prep.setInt(1, b.getPassenger().getPassportNumber());
+            prep.setString(2, b.getBookedFlight().getName());
+
+            prep.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*

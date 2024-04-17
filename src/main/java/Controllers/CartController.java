@@ -1,6 +1,7 @@
 package Controllers;
 
 import EngineStuff.Cart;
+import FlightSystem.*;
 import Interface.InterfaceBooking;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -65,6 +66,13 @@ public class CartController {
             confirmAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
                     Cart.getInstance().removeBooking(selectedBooking);
+                    if (selectedBooking instanceof BookingFlight){
+                        try {
+                            removeFlightBooking(selectedBooking);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     bookingListView.getItems().remove(selectedBooking);
                 }
             });
@@ -73,5 +81,11 @@ public class CartController {
             alert.setHeaderText(null);
             alert.showAndWait();
         }
+    }
+
+    private void removeFlightBooking(InterfaceBooking selectedBooking) throws ClassNotFoundException {
+        BookingFlightDB bookingFlightDB = new BookingFlightDB();
+        bookingFlightDB.delete((BookingFlight) selectedBooking);
+
     }
 }

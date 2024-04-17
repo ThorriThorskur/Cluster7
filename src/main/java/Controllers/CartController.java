@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -41,7 +43,6 @@ public class CartController {
         Parent root = loader.load();
         BookingController bookingController = loader.getController();
 
-        //pass cart objects to the booking controller:
         bookingController.setBookingItems(Cart.getInstance().getBookings());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -55,4 +56,22 @@ public class CartController {
     }
 
 
+    @FXML
+    private void handleRemoveObject(ActionEvent event) {
+        InterfaceBooking selectedBooking = bookingListView.getSelectionModel().getSelectedItem();
+        if (selectedBooking != null) {
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove this item from the cart?", ButtonType.YES, ButtonType.NO);
+            confirmAlert.setHeaderText(null);
+            confirmAlert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    Cart.getInstance().removeBooking(selectedBooking);
+                    bookingListView.getItems().remove(selectedBooking);
+                }
+            });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No item selected!");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
+    }
 }

@@ -144,6 +144,8 @@ public class HotelController implements InterfaceServiceController {
         if (selectedRoom != null && checkInDate != null && checkOutDate != null && checkInDate.isBefore(checkOutDate)) {
             Reservation reservation = ReservationDB.createReservation(selectedRoom, checkInDate, checkOutDate);
             Cart.getInstance().addBooking(reservation);
+
+            onHotelSearchButtonClicked();//prevents the user from adding the same room to the cart twice
         } else {
         }
     }

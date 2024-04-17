@@ -2,6 +2,7 @@ package Controllers;
 
 import DayTours.DayTourBooking;
 import DayTours.Tour;
+import HotelSystem.Reservation;
 import Interface.InterfaceBooking;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import FlightSystem.*;
 
@@ -66,15 +69,29 @@ public class BookingController {
     @FXML
     public void handlePurchase(ActionEvent actionEvent) {
         ObservableList<InterfaceBooking> items = myTableView.getItems();
+        List<InterfaceBooking> toRemove = new ArrayList<>();
+
         for (InterfaceBooking item : items) {
-            if (item instanceof BookingFlight) {
-                BookingFlight flightBooking = (BookingFlight) item;
-                handleFlightBooking(flightBooking);
-            } else if (item instanceof DayTourBooking) {
-                DayTourBooking tourBooking = (DayTourBooking) item;
-                handleDayTourBooking(tourBooking);
+            try {
+                if (item instanceof BookingFlight) {
+                    BookingFlight flightBooking = (BookingFlight) item;
+                    handleFlightBooking(flightBooking);
+                    toRemove.add(flightBooking);
+                } else if (item instanceof DayTourBooking) {
+                    DayTourBooking tourBooking = (DayTourBooking) item;
+                    handleDayTourBooking(tourBooking);
+                    toRemove.add(tourBooking);
+                } else if (item instanceof Reservation) {
+                    Reservation roomBooking = (Reservation) item;
+
+                    toRemove.add(roomBooking);
+                }
+            } catch (Exception e) {
+                System.out.println("Error processing booking: " + e.getMessage());
             }
         }
+
+        items.removeAll(toRemove);
     }
 
     private void handleFlightBooking(BookingFlight booking) {

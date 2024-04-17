@@ -42,7 +42,7 @@
             <RowConstraints />
          </rowConstraints>
       </GridPane>
-      <!-- Flight Table -->
+      <!-- Flight Table  -->
       <TableView fx:id="tableFlights">
          <columns>
             <TableColumn fx:id="columnFlightName" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Flight Name" />
@@ -52,6 +52,9 @@
             <TableColumn fx:id="columnArrivalTime" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Arrival Time" />
             <TableColumn fx:id="columnPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Price" />
          </columns>
+         <placeholder>
+            <Label text="Select departure and destination, then set date" style="-fx-text-fill: gray; -fx-font-size: 14px;" />
+         </placeholder>
       </TableView>
 
       <!-- Action Panel -->

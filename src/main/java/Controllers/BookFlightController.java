@@ -100,8 +100,10 @@ public class BookFlightController {
         if (validateInput(name, passportNumber, address, email, phoneNumber)) {
             Passenger passenger = new Passenger(name, passportNumber, address, email, phoneNumber);
             BookingFlight booking = new BookingFlight(selectedFlight, seat, passenger, false, bags);
-            //selectedFlight.getSeat(seat.getSeatName()).setIsonHold(true);
+            selectedFlight.getSeat(seat.getSeatName()).setIsonHold(true);
             //bookingFlightDB.insert(booking);
+            FlightDB flightDB = new FlightDB();
+            flightDB.updateSeatToTaken(selectedFlight, booking.getSeat());
 
             Cart.getInstance().addBooking(booking);
 

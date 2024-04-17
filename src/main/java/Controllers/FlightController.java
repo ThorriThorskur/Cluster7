@@ -82,6 +82,10 @@ public class FlightController implements InterfaceServiceController {
             //show error message to the user maybe?
             System.out.println("No flight selected.");
         }
+        dpDate.setValue(LocalDate.now());
+        populateDropDown();
+        createTableViewBindings();
+        tableFlights.getItems().clear();
     }
 
     public void initialize() throws ClassNotFoundException {
@@ -90,6 +94,7 @@ public class FlightController implements InterfaceServiceController {
         dpDate.setValue(LocalDate.now());
         populateDropDown();
         createTableViewBindings();
+
     }
 
     public void createTableViewBindings() {

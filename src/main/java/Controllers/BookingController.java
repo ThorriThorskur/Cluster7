@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -34,6 +35,8 @@ public class BookingController {
     private TableColumn<InterfaceBooking, String> detailsColumn;
     @FXML
     private TableColumn<InterfaceBooking, Double> priceColumn;
+    @FXML
+    private Label fxPurchaseThankYou;
 
     private BookingFlightDB bookingFlightDB;
 
@@ -70,7 +73,11 @@ public class BookingController {
     public void handlePurchase(ActionEvent actionEvent) {
         ObservableList<InterfaceBooking> items = myTableView.getItems();
         List<InterfaceBooking> toRemove = new ArrayList<>();
-
+        boolean allProcessedSuccessfully = true;
+        if (items.isEmpty()) {
+            fxPurchaseThankYou.setText("Empty cart");
+            return;
+        }
         for (InterfaceBooking item : items) {
             try {
                 if (item instanceof BookingFlight) {
@@ -87,10 +94,15 @@ public class BookingController {
                     toRemove.add(roomBooking);
                 }
             } catch (Exception e) {
+                allProcessedSuccessfully = false;
                 System.out.println("Error processing booking: " + e.getMessage());
             }
         }
-
+        if (allProcessedSuccessfully) {
+            fxPurchaseThankYou.setText("Thank You!");  // Shows thank you message if items were successfully processed
+        } else if (toRemove.isEmpty()) {
+            fxPurchaseThankYou.setText("No bookings to process");  // Shows a different message if no bookings were processed
+        }
         items.removeAll(toRemove);
     }
 

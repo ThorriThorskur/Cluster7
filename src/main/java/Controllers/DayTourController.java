@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -53,7 +55,7 @@ public class DayTourController implements InterfaceServiceController {
     @FXML
     private TableColumn<Tour, Integer> fxcolumnCapacity;
     @FXML
-    private TableColumn<Tour, UUID> fxcolomnID;
+    private TableColumn<Tour, UUID> fxcolumnID;
 
     private List<DayTourBooking> bookings;
 
@@ -68,6 +70,7 @@ public class DayTourController implements InterfaceServiceController {
             controller.initData(selectedTour, this);
 
             Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Book Day Tour");
             stage.setScene(new Scene(root));
@@ -95,7 +98,7 @@ public class DayTourController implements InterfaceServiceController {
         fxcolumnWheelchair.setCellValueFactory(new PropertyValueFactory<>("wheelchairAccessible"));
         fxcolumnAvailability.setCellValueFactory(new PropertyValueFactory<>("availability"));
         fxcolumnCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        fxcolomnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        fxcolumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 
         ObservableList<String> categoryObs = FXCollections.observableArrayList(getCategories());

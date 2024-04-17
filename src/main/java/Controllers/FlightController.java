@@ -82,9 +82,6 @@ public class FlightController implements InterfaceServiceController {
             //show error message to the user maybe?
             System.out.println("No flight selected.");
         }
-        dpDate.setValue(LocalDate.now());
-        populateDropDown();
-        createTableViewBindings();
         tableFlights.getItems().clear();
     }
 

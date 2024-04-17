@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CartController">
    <children>
-      <Button fx:id="orderButton" layoutX="10.0" layoutY="219.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Order" onAction="#handleOrder" />
-      <ListView fx:id="bookingListView" layoutX="5.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="160.0" />
+      <HBox layoutX="5.0" layoutY="221.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="250.0">
+         <children>
+            <Button fx:id="fxRemoveObject" onAction="#handleRemoveObject" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Remove">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="orderButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleOrder" prefHeight="25.0" prefWidth="145.0" text="Order" />
+         </children>
+      </HBox>
+      <ListView fx:id="bookingListView" layoutX="5.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="250.0" />
    </children>
+   <padding>
+      <Insets right="5.0" />
+   </padding>
 </AnchorPane>

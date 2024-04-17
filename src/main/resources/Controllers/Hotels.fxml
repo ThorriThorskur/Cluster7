@@ -48,7 +48,7 @@
             <RowConstraints />
          </rowConstraints>
       </GridPane>
-      <!-- Hotel Table -->
+      <!-- Hotel Table  -->
       <TableView fx:id="tableRooms">
          <columns>
             <TableColumn fx:id="columnRoomNumber" minWidth="88.99996644258499" prefWidth="105.19997864961624" text="Room number" />

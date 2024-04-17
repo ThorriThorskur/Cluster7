@@ -28,27 +28,40 @@ public class HomePageController implements Initializable {
     @FXML
     private StackPane cartPane;
 
-    String[] options = {"Home", "Flights", "Hotels", "Day tours", "Options"};
+    String[] options = {"Home", "Flights", "Hotels", "Day tours"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuListView.getItems().addAll(options);
 
-        // Select "Home" by default in the ListView
+        // Set the preferred height of the ListView
+        updateListViewHeight();
+
         menuListView.getSelectionModel().select("Home");
-        // Load the Home view when the application starts
         loadView("Home");
-        // Load the cart when application starts
         loadCart();
 
-        // Add the listener for changes in the selection
-        menuListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                myLabel.setText(newValue); // Update the label to reflect the selection
-                loadView(newValue); // Load the view based on the new selection
-            }
+        // Listener for changes in the list selection
+        menuListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            myLabel.setText(newValue);
+            loadView(newValue);
         });
+    }
+
+    private void updateListViewHeight() {
+        double height = 0;
+        int itemsCount = menuListView.getItems().size();
+        double itemHeight = 24; // Assuming each item's height is 24 pixels; adjust as necessary
+
+        // Calculating total height for all items
+        height = itemsCount * itemHeight;
+
+        // Set padding or extra spacing if needed
+        double padding = 2; // Extra space at the bottom or top as needed
+        height += padding;
+
+        // Setting the preferred height of the ListView
+        menuListView.setPrefHeight(height);
     }
 
 
@@ -68,9 +81,6 @@ public class HomePageController implements Initializable {
                     break;
                 case "Day tours":
                     node = FXMLLoader.load(getClass().getResource("/Controllers/DayTours.fxml"));
-                    break;
-                case "Options":
-                    node = FXMLLoader.load(getClass().getResource("/Controllers/Options.fxml"));
                     break;
                 default:
                     System.out.println("No panel available for this selection.");

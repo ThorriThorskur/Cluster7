@@ -42,7 +42,7 @@
             <RowConstraints />
          </rowConstraints>
       </GridPane>
-      <!-- Flight Table -->
+      <!-- Flight Table  -->
       <TableView fx:id="tableFlights">
          <columns>
             <TableColumn fx:id="columnFlightName" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Flight Name" />

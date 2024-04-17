@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -38,24 +39,7 @@ public class BookDayTourController {
     private DayTourController dayTourController;
 
 
-    private void handleConfirmPurchase(DayTourBooking book){
-        String sqlBooking = "INSERT INTO Booking (bookingID, tourID, userID, pickUpLocation) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmtBooking = conn.prepareStatement(sqlBooking);) {
 
-            pstmtBooking.setString(1, book.getId().toString());
-            pstmtBooking.setString(2, selectedTour.getTourId().toString());
-            pstmtBooking.setString(3, book.getId().toString());
-            pstmtBooking.setString(4, selectedTour.getLocationName());
-            pstmtBooking.executeUpdate();
-
-
-            System.out.println("Booking created with ID: " + book.getId());
-
-        } catch (SQLException e) {
-            System.out.println("Error occurred while adding the booking: " + e.getMessage());
-        }
-    }
 
     @FXML
     private void handleConfirmBooking() throws ClassNotFoundException, SQLException {
@@ -85,6 +69,8 @@ public class BookDayTourController {
                 Cart.getInstance().addBooking(bookingTour);
                 initData(selectedTour, dayTourController);
                 clearFields();
+                Stage stage = (Stage) fxTourName.getScene().getWindow();
+                stage.close();
             }
             else {
                 fxErrorMessage.setText("Sorry, Please enter the correct details.");
@@ -130,7 +116,9 @@ public class BookDayTourController {
     }
 
     @FXML
-    public void handleCancel(ActionEvent event) {
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+    public void handleCancel(ActionEvent actionEvent) {
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }

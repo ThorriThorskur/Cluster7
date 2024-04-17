@@ -43,7 +43,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="purchaseButton" layoutX="511.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Purchase" />
+      <Button fx:id="purchaseButton" onAction="#handlePurchase" layoutX="511.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Purchase" />
       <TextField fx:id="cardNumber" layoutX="102.0" layoutY="404.0" prefHeight="25.0" prefWidth="224.0" />
       <TextField fx:id="firstName" layoutX="102.0" layoutY="455.0" prefHeight="25.0" prefWidth="127.0" />
       <TextField fx:id="lastName" layoutX="231.0" layoutY="455.0" prefHeight="25.0" prefWidth="95.0" />

@@ -98,6 +98,7 @@ public class BookingController {
         try {
             if (!booking.isPaidFor()) {
                 booking.setPaidFor(true);
+                booking.getBookedFlight().getSeat(booking.getSeat().getSeatName()).setBooked(true);
                 bookingFlightDB.insert(booking);
                 System.out.println("Booking processed: " + booking.getId());
             }

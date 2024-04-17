@@ -73,5 +73,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="fxPurchaseThankYou" alignment="CENTER" layoutX="536.0" layoutY="438.0" prefHeight="25.0" prefWidth="149.0" />
    </children>
 </AnchorPane>

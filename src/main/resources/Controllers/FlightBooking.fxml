@@ -118,7 +118,7 @@
             <HBox>
                <children>
                   <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="55.0" text="Cancel" />
-                  <Label fx:id="fxErrorMessage" prefHeight="25.0" prefWidth="332.0" text="//Error message">
+                  <Label fx:id="fxErrorMessage" prefHeight="25.0" prefWidth="332.0">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

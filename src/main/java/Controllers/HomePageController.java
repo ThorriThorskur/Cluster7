@@ -34,37 +34,15 @@ public class HomePageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuListView.getItems().addAll(options);
 
-        // Set the preferred height of the ListView
-        updateListViewHeight();
-
         menuListView.getSelectionModel().select("Home");
         loadView("Home");
         loadCart();
 
-        // Listener for changes in the list selection
         menuListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             myLabel.setText(newValue);
             loadView(newValue);
         });
     }
-
-    private void updateListViewHeight() {
-        double height = 0;
-        int itemsCount = menuListView.getItems().size();
-        double itemHeight = 24; // Assuming each item's height is 24 pixels; adjust as necessary
-
-        // Calculating total height for all items
-        height = itemsCount * itemHeight;
-
-        // Set padding or extra spacing if needed
-        double padding = 2; // Extra space at the bottom or top as needed
-        height += padding;
-
-        // Setting the preferred height of the ListView
-        menuListView.setPrefHeight(height);
-    }
-
-
 
     private void loadView(String viewName) {
         Node node = null;

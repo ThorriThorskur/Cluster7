@@ -48,7 +48,7 @@
             <RowConstraints />
          </rowConstraints>
       </GridPane>
-      <!-- Hotel Table -->
+      <!-- Hotel Table  -->
       <TableView fx:id="tableRooms">
          <columns>
             <TableColumn fx:id="columnRoomNumber" minWidth="88.99996644258499" prefWidth="105.19997864961624" text="Room number" />
@@ -56,6 +56,9 @@
             <TableColumn fx:id="columnAvailability" minWidth="90.0" prefWidth="182.20001220703125" text="Availability" />
             <TableColumn fx:id="columnPricePerNight" minWidth="85.0" prefWidth="308.199951171875" text="Price per night" />
          </columns>
+         <placeholder>
+            <Label text="Select location and hotel, then choose check in and check out dates" style="-fx-text-fill: gray; -fx-font-size: 14px;" />
+         </placeholder>
       </TableView>
 
       <!-- Action Panel -->

@@ -50,24 +50,35 @@ public class BookDayTourController {
                 insertUser(currentUser);
 
                 String sqlTour = "UPDATE Tours SET capacity = ?, availability = ? WHERE tourID = ?";
+                String sqlcap = "SELECT capacity FROM Tours WHERE tourID = ?";;
+
 
                 try (Connection conn = DriverManager.getConnection(DB_URL);
-                     PreparedStatement pstmtTour = conn.prepareStatement(sqlTour)) {
-
-                    int newCapacity = selectedTour.getCapacity() - 1;
-                    boolean newAvailability = newCapacity > 0;
-                    pstmtTour.setInt(1, newCapacity);
-                    pstmtTour.setBoolean(2, newAvailability);
-                    pstmtTour.setString(3, selectedTour.getTourId().toString());
-                    pstmtTour.executeUpdate();
-                    selectedTour.setCapacity(newCapacity);
-
+                     PreparedStatement pstmtTour = conn.prepareStatement(sqlTour);
+                     PreparedStatement pstmcap = conn.prepareStatement(sqlcap);
+                ) {
+                    String tourIdToSearch = selectedTour.getTourId().toString();
+                    pstmcap.setString(1, tourIdToSearch);
+                    ResultSet capres = pstmcap.executeQuery();
+                    if (capres.next()) {
+                        int newCapacity = capres.getInt(1);
+                        newCapacity = newCapacity - 1;
+                        boolean newAvailability = newCapacity > 0;
+                        pstmtTour.setInt(1, newCapacity);
+                        pstmtTour.setBoolean(2, newAvailability);
+                        pstmtTour.setString(3, tourIdToSearch);
+                        pstmtTour.executeUpdate(); // Perform the update
+                        selectedTour.setCapacity(newCapacity);
+                    } else {
+                        System.out.println("No data found for the tour ID: " + tourIdToSearch);
+                    }
                 } catch (SQLException e) {
                     System.out.println("Error occurred while adding the booking: " + e.getMessage());
                 }
 
                 Cart.getInstance().addBooking(bookingTour);
                 initData(selectedTour, dayTourController);
+                /* update();*/
                 clearFields();
                 Stage stage = (Stage) fxTourName.getScene().getWindow();
                 stage.close();
@@ -79,6 +90,25 @@ public class BookDayTourController {
         else {
             fxErrorMessage.setText("Sorry, this tour is fully booked.");
         }
+    }
+
+    public void increaseCapacity(DayTourBooking book){
+        String sqlTour = "UPDATE Tours SET capacity = ?, availability = ? WHERE tourID = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmtTour = conn.prepareStatement(sqlTour)) {
+
+            int newCapacity = book.getTour().getCapacity() + 1;
+            boolean newAvailability = newCapacity > 0;
+            pstmtTour.setInt(1, newCapacity);
+            pstmtTour.setBoolean(2, newAvailability);
+            pstmtTour.setString(3, book.getTour().getTourId().toString());
+            pstmtTour.executeUpdate();
+            book.getTour().setCapacity(newCapacity);
+
+        } catch (SQLException e) {
+            System.out.println("Error occurred while adding the booking: " + e.getMessage());
+        }
+
     }
 
     private void clearFields(){

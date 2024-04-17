@@ -1,5 +1,6 @@
 package Controllers;
 
+import DayTours.DayTourBooking;
 import EngineStuff.Cart;
 import Interface.InterfaceBooking;
 import javafx.collections.FXCollections;
@@ -66,6 +67,10 @@ public class CartController {
                 if (response == ButtonType.YES) {
                     Cart.getInstance().removeBooking(selectedBooking);
                     bookingListView.getItems().remove(selectedBooking);
+                    if (selectedBooking instanceof DayTourBooking){
+                        BookDayTourController controller = new BookDayTourController();
+                        controller.increaseCapacity((DayTourBooking) selectedBooking);
+                    }
                 }
             });
         } else {

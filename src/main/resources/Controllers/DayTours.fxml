@@ -62,13 +62,16 @@
             <TableColumn fx:id="fxcolumnTime" minWidth="12.0" prefWidth="108.0" text="Category" />
             <TableColumn fx:id="fxcolumnRating" prefWidth="46.0" text="Rating" />
             <TableColumn fx:id="fxcolumnPrice" prefWidth="81.0" text="Price" />
-            <TableColumn fx:id="fxcolumnLocation" prefWidth="100.0" text="PickupLocation" />
-            <TableColumn fx:id="fxcolumnFamily" prefWidth="81.0" text="FamilyFriendy" />
-            <TableColumn fx:id="fxcolumnWheelchair" prefWidth="110.0" text="WheelchairAccessable" />
+            <TableColumn fx:id="fxcolumnLocation" prefWidth="150.0" text="Pick up Location" />
+            <TableColumn fx:id="fxcolumnFamily" prefWidth="95.0" text="Family Friendy" />
+            <TableColumn fx:id="fxcolumnWheelchair" prefWidth="130.0" text="Wheelchair Accessible" />
             <TableColumn fx:id="fxcolumnAvailability" prefWidth="81.0" text="Available" />
-            <TableColumn fx:id="fxcolumnCapacity" prefWidth="81.0" text="Capacity" />
+            <TableColumn fx:id="fxcolumnCapacity" prefWidth="81.0" text="Spots left" />
             <TableColumn fx:id="fxcolumnID" visible="false" />
          </columns>
+         <placeholder>
+            <Label text="Select Tour name, date, category, or simply click on the search button to view all available tours." style="-fx-text-fill: gray; -fx-font-size: 14px;" />
+         </placeholder>
       </TableView>
 
       <!-- Action Panel -->

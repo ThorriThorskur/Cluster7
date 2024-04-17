@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class FlightController implements InterfaceServiceController {
+    public Label fxTableViewLabel;
     private FlightDB db;
     private BookingFlightDB bookingDb;
 
@@ -188,11 +189,16 @@ public class FlightController implements InterfaceServiceController {
         String destination = fxDestination.getValue();
         String date = String.valueOf(dpDate.getValue());
 
-        if (location != null && txtMaxPrice.getText().isEmpty()){
-            flightArrayList = searchFlights(location, destination, date);
+        if (fxDestination.getSelectionModel().isEmpty() || fxDeparture.getSelectionModel().isEmpty() || dpDate.getValue().equals(null)){
+            fxTableViewLabel.setText("Please insert search values.");
         } else {
-            flightArrayList = searchFlightsWithPrice(location, destination, date, Integer.parseInt(txtMaxPrice.getText()));
+            if (location != null && txtMaxPrice.getText().isEmpty()){
+                flightArrayList = searchFlights(location, destination, date);
+            } else {
+                flightArrayList = searchFlightsWithPrice(location, destination, date, Integer.parseInt(txtMaxPrice.getText()));
+            }
         }
+
         ObservableList<Flight> flightObs = FXCollections.observableArrayList(flightArrayList);
         tableFlights.setItems(flightObs);
 

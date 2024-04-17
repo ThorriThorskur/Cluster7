@@ -16,7 +16,7 @@
       </Label>
    </top>
    <left>
-      <ListView fx:id="menuListView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
+      <ListView fx:id="menuListView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="94.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></ListView>

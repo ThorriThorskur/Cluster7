@@ -57,7 +57,7 @@ public class CartController {
 
 
     @FXML
-    private void handleRemoveObject(ActionEvent event) {
+    public void handleRemoveObject(ActionEvent event) {
         InterfaceBooking selectedBooking = bookingListView.getSelectionModel().getSelectedItem();
         if (selectedBooking != null) {
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Remove this item from the cart?", ButtonType.YES, ButtonType.NO);
